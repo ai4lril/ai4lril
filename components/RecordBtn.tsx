@@ -8,6 +8,10 @@ export default function RecordBtn({ onAudioRecorded }: RecordBtnProps) {
     const [isRecording, setIsRecording] = useState(false);
     const [audioBlob, setAudioBlob] = useState<Blob | null>(null);
     const [audioURL, setAudioURL] = useState<string | null>(null);
+    const [uploading, setUploading] = useState(false);
+    const [uploadSuccess, setUploadSuccess] = useState(false);
+    const [uploadError, setUploadError] = useState(false);
+
     const mediaRecorderRef = useRef<MediaRecorder | null>(null);
     const audioChunksRef = useRef<Blob[]>([]);
     const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -124,8 +128,35 @@ export default function RecordBtn({ onAudioRecorded }: RecordBtnProps) {
         };
     }, []);
 
-    const handleSubmit = () => {
-        if (audioBlob && onAudioRecorded) {
+    const handleSubmit = async () => {
+        if (!audioBlob) return;
+        setUploading(true);
+        setUploadSuccess(false);
+        setUploadError(false);
+
+        try {
+            // Simulate network delay for uploading animation
+            await new Promise(res => setTimeout(res, 1200));
+
+            // Simulate successful upload (no actual fetch)
+            // const formData = new FormData();
+            // formData.append('audio', audioBlob, 'recording.webm');
+            // const response = await fetch('/api/upload-audio', {
+            //     method: 'POST',
+            //     body: formData,
+            // });
+            // if (!response.ok) throw new Error('Upload failed');
+
+            setUploading(false);
+            setUploadSuccess(true);
+            setTimeout(() => setUploadSuccess(false), 1900);
+        } catch (err) {
+            setUploading(false);
+            setUploadError(true);
+            setTimeout(() => setUploadError(false), 1900);
+        }
+
+        if (onAudioRecorded) {
             onAudioRecorded(audioBlob);
         }
     };
@@ -165,10 +196,34 @@ export default function RecordBtn({ onAudioRecorded }: RecordBtnProps) {
                 <audio controls src={audioURL || undefined} className="w-full" />
                 <button
                     onClick={handleSubmit}
-                    className="px-4 py-2 bg-blue-600 rounded-full text-white hover:bg-blue-700 "
-                    disabled={!audioBlob}
+                    className={`px-4 py-2 rounded-full text-white flex items-center justify-center
+                        ${uploadSuccess
+                            ? 'bg-green-600'
+                            : uploadError
+                                ? 'bg-red-600'
+                                : 'bg-blue-600 hover:bg-blue-700'
+                        }`}
+                    disabled={!audioBlob || uploading || uploadSuccess || uploadError}
                 >
-                    Submit
+                    {uploading ? (
+                        <span className="flex items-center gap-1">
+                            <span className="animate-bounce" style={{ animationDelay: '0ms' }}>.</span>
+                            <span className="animate-bounce" style={{ animationDelay: '150ms' }}>.</span>
+                            <span className="animate-bounce" style={{ animationDelay: '300ms' }}>.</span>
+                        </span>
+                    ) : uploadSuccess ? (
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-6 h-6">
+                            <path d="M20 6L9 17l-5-5"></path>
+                        </svg>
+                    ) : uploadError ? (
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-6 h-6">
+                            <circle cx="12" cy="12" r="10" />
+                            <line x1="15" y1="9" x2="9" y2="15" />
+                            <line x1="9" y1="9" x2="15" y2="15" />
+                        </svg>
+                    ) : (
+                        "Submit"
+                    )}
                 </button>
             </div>
         </div>
