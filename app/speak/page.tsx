@@ -1,7 +1,6 @@
 "use client";
 
 import DialogBox from "@/components/DialogBox"
-import ProgressBar from "@/components/ProgressBar";
 
 export default function Speak() {
 
