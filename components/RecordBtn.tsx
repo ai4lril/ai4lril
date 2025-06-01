@@ -78,7 +78,7 @@ export default function RecordBtn({ onAudioRecorded }: RecordBtnProps) {
         };
 
         mediaRecorder.onstop = () => {
-            const blob = new Blob(audioChunksRef.current, { type: 'audio/webm' });
+            const blob = new Blob(audioChunksRef.current, { type: 'audio/wav' });
             setAudioBlob(blob);
             setAudioURL(URL.createObjectURL(blob));
         };
@@ -140,7 +140,7 @@ export default function RecordBtn({ onAudioRecorded }: RecordBtnProps) {
 
             // Simulate successful upload (no actual fetch)
             // const formData = new FormData();
-            // formData.append('audio', audioBlob, 'recording.webm');
+            // formData.append('audio', audioBlob, 'recording.wav');
             // const response = await fetch('/api/upload-audio', {
             //     method: 'POST',
             //     body: formData,
@@ -173,7 +173,7 @@ export default function RecordBtn({ onAudioRecorded }: RecordBtnProps) {
             />
 
             {/* Inline music player and mic button */}
-            <div className="w-full flex flex-row items-center justify-center gap-4 bg-gray-100 rounded-full px-4 py-2 mt-4">
+            <div className="w-full flex flex-row items-center justify-center gap-4 bg-white shadow rounded-full px-4 py-2 mt-4">
                 <button
                     onClick={isRecording ? stopRecording : startRecording}
                     className={`z-10 m-1 px-4 py-3 outline-2 rounded-full flex items-center justify-center shadow-lg transition-colors duration-300
@@ -193,7 +193,7 @@ export default function RecordBtn({ onAudioRecorded }: RecordBtnProps) {
                         </svg>
                     )}
                 </button>
-                <audio controls src={audioURL || undefined} className="w-full" />
+                <audio controls src={audioURL || undefined} className="w-full bg-transparent" />
                 <button
                     onClick={handleSubmit}
                     className={`px-4 py-2 rounded-full text-white flex items-center justify-center
