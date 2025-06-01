@@ -1,19 +1,12 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import Navbar from "@/components/Navbar";
+
+// mantine imports
+import '@mantine/core/styles.css';
+import { ColorSchemeScript, MantineProvider, mantineHtmlProps, createTheme } from '@mantine/core';
+
 import "./globals.css";
 
-import Navbar from "@/components/Navbar";
-import Modes from "@/components/Modes";
-
-const geistSans = Geist({
-    variable: "--font-geist-sans",
-    subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-    variable: "--font-geist-mono",
-    subsets: ["latin"],
-});
 
 export const metadata: Metadata = {
     title: "voice-data-collection",
@@ -26,14 +19,18 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <html lang="en">
-            <body
-                className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-            >
-                <Navbar />
-                <Modes />
-
-                {children}
+        <html lang="en" {...mantineHtmlProps}>
+            <head>
+                <ColorSchemeScript />
+            </head>
+            <body>
+                <MantineProvider>
+                    <Navbar />
+                    <main className="container  mx-auto">
+                        {children}
+                        
+                    </main>
+                </MantineProvider>
             </body>
         </html>
     );

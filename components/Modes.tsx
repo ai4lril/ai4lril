@@ -16,28 +16,29 @@ export default function Modes() {
     }
 
     return (
-        <div className="flex justify-between items-center py-4 bg-gray-200 ">
-            <ul className="flex space-x-6 mx-auto h-full">
+        <div className="flex justify-around items-center bg-gray-200 ">
+
+            <ul className="flex ">
                 {modes.map((mode) => {
                     const href = `/${mode.toLowerCase()}`;
                     const isActive = pathname === href;
-
                     return (
-                        <li key={mode}>
+                        <li key={mode} className={`p-2.5 ${isActive
+                            ? 'bg-neutral-50 text-blue-600 border-b-3'
+                            : 'hover:text-blue-600'
+                            }`}>
                             <Link
                                 href={href}
-                                className={`px-5 h-full py-3.5 transition-colors duration-200
-                                    ${isActive
-                                        ? 'text-blue-600 border-b-4 border-blue-600'
-                                        : 'hover:text-blue-600'
-                                    }`}
+                                className={`px-5 h-full transition-colors duration-200`}
                             >
                                 {mode}
                             </Link>
                         </li>
                     );
                 })}
+
             </ul>
+
         </div>
     );
 }

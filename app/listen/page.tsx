@@ -1,12 +1,8 @@
-export default function Speak() {
+export default function Listen() {
     return (
-        <main className="d-flex flex-col items-center justify-between p-24">
-            <div className="flex flex-col items-center justify-center h-screen bg-gray-100">
-                <div>
-                    <h1 className="text-2xl font-bold mb-4">Listen</h1>
-                    <p className="text-lg">This is the Listen page.</p>
-                </div>
-            </div>
-        </main>
+        <div className="flex flex-col items-center justify-center h-screen">
+            <h1 className="text-4xl font-bold mb-4">Listen</h1>
+            <p className="text-lg">This is the Listen page.</p>
+        </div>
     );
 }
