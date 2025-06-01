@@ -1,9 +1,11 @@
 "use client";
 
 import DialogBox from "@/components/DialogBox"
-import RecordBtn from "@/components/RecordBtn"
+import ProgressBar from "@/components/ProgressBar";
 
 export default function Speak() {
+
+
     return (
         <div className="mt-10 flex flex-col items-center justify-center">
 
@@ -16,8 +18,7 @@ export default function Speak() {
 
             <DialogBox />
 
-           
-            <RecordBtn />
+
 
         </div>
     )
