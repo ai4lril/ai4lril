@@ -1,7 +1,6 @@
 "use client";
 
 import DialogBox from "@/components/DialogBox"
-import ProgressBar from "@/components/ProgressBar"
 import RecordBtn from "@/components/RecordBtn"
 
 export default function Speak() {
@@ -17,7 +16,7 @@ export default function Speak() {
 
             <DialogBox />
 
-            <ProgressBar progress={50} />
+           
             <RecordBtn />
 
         </div>
