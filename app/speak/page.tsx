@@ -3,40 +3,43 @@
 import DialogBox from "@/components/DialogBox"
 import RecordBtn from "@/components/RecordBtn";
 
+
 export default function Speak() {
 
     const handleAudioRecorded = (audioBlob: Blob) => {
-        // Example: Save to server or IndexedDB
-        // For now, just log and save to local file
-        const url = URL.createObjectURL(audioBlob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = 'recording.wav';
-        a.click();
-        URL.revokeObjectURL(url);
-        // You can replace the above with your own upload/save logic
+        // If the blob is a File, use its name; otherwise, use a default name
+        const fileName = (audioBlob instanceof File && audioBlob.name) ? audioBlob.name : "recording.wav";
+
+        console.log("Received audio blob:", fileName);
+
+        // Example: Upload the file
+        const formData = new FormData();
+        formData.append("audio", audioBlob, fileName);
+        // fetch('/api/upload', { method: 'POST', body: formData });
+
+        // Or create a download link
+        const downloadUrl = URL.createObjectURL(audioBlob);
+        const link = document.createElement('a');
+        link.href = downloadUrl;
+        link.download = fileName;
+        link.click();
     };
 
+
+
     return (
-        <div className="mt-10 flex flex-col items-center justify-center">
+        <div className=" bg-slate-400 flex flex-col items-center">
             <p>click <span className="inline-flex">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M12 18.75a6 6 0 0 0 6-6v-1.5m-6 7.5a6 6 0 0 1-6-6v-1.5m6 7.5v3.75m-3.75 0h7.5M12 15.75a3 3 0 0 1-3-3V4.5a3 3 0 1 1 6 0v8.25a3 3 0 0 1-3 3Z" />
                 </svg>
             </span> then read the sentence aloud</p>
 
+
+
+
             <DialogBox />
-
             <RecordBtn onAudioRecorded={handleAudioRecorded} />
-
-            <div className="flex flex-col sm:flex-row gap-4 w-full mt-4">
-                <button className="bg-blue-500 text-white font-semibold py-2 w-full rounded-full transition-colors duration-200 shadow hover:bg-blue-600">
-                    Skip
-                </button>
-                <button className="bg-slate-100 text-black font-semibold py-2 w-full rounded-full transition-colors duration-200 shadow hover:bg-slate-200">
-                    Restart
-                </button>
-            </div>
         </div>
     )
 }
