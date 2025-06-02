@@ -1,25 +1,14 @@
 import React, { useState, useRef, useEffect } from 'react';
 
-/**
- * Props for RecordBtn component
- * @interface RecordBtnProps
- * @property {function} onAudioRecorded - Callback function that receives the WAV file
- */
 interface RecordBtnProps {
     onAudioRecorded?: (wavFile: File) => void;
 }
 
-/**
- * A simple audio recording button component that creates a WAV file
- */
 export default function RecordBtn({ onAudioRecorded }: RecordBtnProps) {
     const [isRecording, setIsRecording] = useState(false);
     const mediaRecorderRef = useRef<MediaRecorder | null>(null);
     const audioChunksRef = useRef<Blob[]>([]);
 
-    /**
-     * Start audio recording from microphone
-     */
     const startRecording = async () => {
         try {
             audioChunksRef.current = [];
@@ -29,7 +18,7 @@ export default function RecordBtn({ onAudioRecorded }: RecordBtnProps) {
             mediaRecorderRef.current = mediaRecorder;
 
             mediaRecorder.ondataavailable = e => e.data.size > 0 && audioChunksRef.current.push(e.data);
-            
+
             mediaRecorder.onstop = () => {
                 const audioBlob = new Blob(audioChunksRef.current, { type: 'audio/wav' });
                 const fileName = `recording_${new Date().toISOString()}.wav`;
@@ -44,9 +33,6 @@ export default function RecordBtn({ onAudioRecorded }: RecordBtnProps) {
         }
     };
 
-    /**
-     * Stop the current recording
-     */
     const stopRecording = () => {
         if (mediaRecorderRef.current) {
             mediaRecorderRef.current.stop();
@@ -55,7 +41,6 @@ export default function RecordBtn({ onAudioRecorded }: RecordBtnProps) {
         }
     };
 
-    // Clean up when component unmounts
     useEffect(() => () => {
         if (mediaRecorderRef.current && isRecording) stopRecording();
     }, [isRecording]);
@@ -63,18 +48,19 @@ export default function RecordBtn({ onAudioRecorded }: RecordBtnProps) {
     return (
         <button
             onClick={isRecording ? stopRecording : startRecording}
-            className={`rounded-full p-4 shadow-lg transition-all duration-300 
-                ${isRecording 
-                    ? 'bg-red-100 shadow-lg shadow-red-400/50 animate-pulse hover:shadow-red-500/70' 
-                    : 'bg-gray-200 shadow-md shadow-blue-300/30 hover:shadow-blue-400/50'}`}
+            className={`rounded-full p-4 transition-all duration-300 relative
+                ${isRecording
+                    ? 'bg-red-100 shadow-xl shadow-red-500/70 ring-2 ring-red-400/50 animate-pulse hover:shadow-red-600/80 hover:ring-red-500/70'
+                    : 'bg-gray-200 shadow-lg shadow-blue-300/40 ring-2 ring-blue-300/30 hover:shadow-blue-400/60 hover:ring-blue-400/50'}`}
             aria-label={isRecording ? "Stop recording" : "Start recording"}
         >
+            <span className={`absolute inset-0 rounded-full ${isRecording ? 'animate-ping bg-red-400/20' : 'bg-transparent'}`}></span>
             {isRecording ? (
-                <svg width="32" height="32" viewBox="0 0 32 32" className="animate-pulse">
+                <svg width="32" height="32" viewBox="0 0 32 32" className="animate-pulse relative z-10">
                     <rect x="8" y="8" width="16" height="16" rx="3" fill="#ff4c4c" />
                 </svg>
             ) : (
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="#222">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="#222" className="relative z-10">
                     <path d="M12 15c1.66 0 3-1.34 3-3V6c0-1.66-1.34-3-3-3S9 4.34 9 6v6c0 1.66 1.34 3 3 3z" />
                     <path d="M17 12c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V22h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z" />
                 </svg>
