@@ -16,7 +16,7 @@ interface NavbarItem {
 const navbarItems: NavbarItem[] = [
     { name: 'Home', path: '/' },
     { name: 'Scripted Speech', path: '/speak' },
-    { name: 'Spontaneous Speech', path: '/Question' },
+    { name: 'Spontaneous Speech', path: '/question' },
 
 ];
 
