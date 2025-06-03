@@ -22,7 +22,7 @@ export default function RootLayout({
         <html lang="en" >
             <body className="flex flex-col min-h-screen">
                 <Navbar />
-                <main className="flex-1 container mx-auto bg-blue-100 flex flex-col items-center justify-around overflow-auto px-2">
+                <main className="flex-1 container mx-auto flex flex-col items-center justify-around px-2">
                     {children}
                 </main>
                 {process.env.NODE_ENV === 'development' && (

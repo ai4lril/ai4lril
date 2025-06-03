@@ -48,19 +48,19 @@ export default function RecordBtn({ onAudioRecorded }: RecordBtnProps) {
     return (
         <button
             onClick={isRecording ? stopRecording : startRecording}
-            className={`rounded-full p-4 transition-all duration-300 relative
+            className={`rounded-full size-20 flex items-center justify-center transition-all duration-300 relative m-2 bg-white border
                 ${isRecording
-                    ? 'bg-red-100 shadow-xl shadow-red-500/70 ring-2 ring-red-400/50 animate-pulse hover:shadow-red-600/80 hover:ring-red-500/70'
-                    : 'bg-gray-200 shadow-lg shadow-blue-300/40 ring-2 ring-blue-300/30 hover:shadow-blue-400/60 hover:ring-blue-400/50'}`}
+                    ? 'bg-red-50 shadow-xl shadow-red-500/30 ring-2 ring-red-400 animate-pulse hover:shadow-red-600/40 hover:ring-red-500'
+                    : 'shadow-lg shadow-blue-400/20 ring-2 ring-blue-400 hover:shadow-blue-500/30 hover:ring-blue-500 hover:bg-blue-50'}`}
             aria-label={isRecording ? "Stop recording" : "Start recording"}
         >
-            <span className={`absolute inset-0 rounded-full ${isRecording ? 'animate-ping bg-red-400/20' : 'bg-transparent'}`}></span>
+            <span className={`absolute inset-0 rounded-full ${isRecording ? 'animate-ping bg-red-400/10' : ''}`}></span>
             {isRecording ? (
-                <svg width="32" height="32" viewBox="0 0 32 32" className="animate-pulse relative z-10">
-                    <rect x="8" y="8" width="16" height="16" rx="3" fill="#ff4c4c" />
+                <svg width="32" height="32" viewBox="0 0 32 32" className="animate-pulse z-10 text-red-500">
+                    <rect x="8" y="8" width="16" height="16" rx="3" fill="currentColor" />
                 </svg>
             ) : (
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="#222" className="relative z-10">
+                <svg width="28" height="28" viewBox="0 0 24 24" className="z-10 text-blue-500" fill="currentColor">
                     <path d="M12 15c1.66 0 3-1.34 3-3V6c0-1.66-1.34-3-3-3S9 4.34 9 6v6c0 1.66 1.34 3 3 3z" />
                     <path d="M17 12c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V22h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z" />
                 </svg>
