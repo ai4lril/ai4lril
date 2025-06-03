@@ -63,7 +63,7 @@ export default function Navbar() {
                         </div>
 
                         <div className="ml-8">
-                            {['/speak', '/listen', '/write'].includes(pathname) && (
+                            {['/speak', '/listen', '/write', '/question', '/answer', '/transcribe', '/review'].includes(pathname) && (
                                 <LangSwitcher />
                             )}
                         </div>
