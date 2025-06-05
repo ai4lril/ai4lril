@@ -6,7 +6,7 @@ import BottomBar from "@/components/BottomBar";
 import { useState, useEffect } from "react";
 
 
-export default function Speak() {
+export default function Answer() {
     // State to store the recorded audio file and its URL
     const [recordedAudio, setRecordedAudio] = useState<File | null>(null);
     const [audioUrl, setAudioUrl] = useState<string | undefined>(undefined);
