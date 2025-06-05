@@ -73,7 +73,7 @@ export default function Speak() {
                 <DialogBox />
                 <RecordBtn onAudioRecorded={handleAudioRecorded} />
             </div>
-            
+
             <BottomBar
                 audioSrc={audioUrl}
                 onSkip={handleSkip}

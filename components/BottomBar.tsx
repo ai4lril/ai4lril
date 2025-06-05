@@ -28,7 +28,7 @@ export default function BottomBar({ audioSrc, onSkip, onSubmit, disabled = false
             {/* Skip Button */}
             <button
                 onClick={onSkip}
-                className="bg-white inset-shadow-sm inset-shadow-gray-300  w-[12vw] min-w-[130px] px-5 py-2 sm:py-5 outline-3 rounded-full text-gray-500 hover:bg-gray-50 hover:border-gray-400  transition-all flex items-center justify-center gap-2 sm:order-1"
+                className="bg-white inset-shadow-sm inset-shadow-gray-300  w-[12vw] min-w-[130px] px-5 py-2 sm:py-5 outline-2 rounded-full text-gray-500 hover:bg-gray-50 hover:border-gray-400  transition-all flex items-center justify-center gap-2 sm:order-1"
             >
                 Skip
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
@@ -72,7 +72,7 @@ export default function BottomBar({ audioSrc, onSkip, onSubmit, disabled = false
             <button
                 onClick={onSubmit}
                 disabled={disabled || !audioSrc}
-                className={`bg-white inset-shadow-sm inset-shadow-gray-300 w-[12vw] min-w-[130px] px-5 py-2 sm:py-5 outline-3 rounded-full transition-all flex items-center justify-center sm:order-3 ms-auto
+                className={`bg-white inset-shadow-sm inset-shadow-gray-300 w-[12vw] min-w-[130px] px-5 py-2 sm:py-5 outline-2 rounded-full transition-all flex items-center justify-center sm:order-3 ms-auto
                     ${audioSrc
                         ? 'text-green-800 outline-green-400 hover:bg-blue-50 hover:text-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-300'
                         : 'text-gray-500 cursor-not-allowed'
