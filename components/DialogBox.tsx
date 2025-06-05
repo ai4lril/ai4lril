@@ -4,7 +4,7 @@ export default function DialogBox() {
 
 
         <p
-            className="text-center font-semibold break-words pb-3 "
+            className="text-center font-semibold break-words pt-3"
             style={{
                 fontSize: 'clamp(1rem, 2vw, 1.25rem)',
                 lineHeight: '1.4',

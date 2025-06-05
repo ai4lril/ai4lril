@@ -74,7 +74,10 @@ export default function Speak() {
                 <div className="flex-1 min-h-[40vh] max-h-fit sm:px-8 p-8 xs:px-4
                       flex flex-col items-center justify-around 
                       bg-white rounded-l-2xl shadow-2xl relative z-20 border border-gray-100 mr-[5px] sm:mr-[5px]">
-                    <h2 className="text-lg font-bold mb-4 tracking-tight">Answer the question below</h2>
+                    <div className="flex flex-col items-center">
+                        <h2 className="text-lg font-bold mb-4 tracking-tight">Answer the question below</h2>
+                        <span className=" block w-[100px] h-[2px] bg-gradient-to-r from-indigo-500 to-purple-500"></span>
+                    </div>
                     <DialogBox />
                     <div className="mt-6">
                         <RecordBtn onAudioRecorded={handleAudioRecorded} />
