@@ -60,20 +60,25 @@ export default function Speak() {
 
     return (
         <div className="flex flex-col items-center w-full h-full justify-center gap">
-            <p className="mt-7 sm:mt-3 text-center">click <span className="inline-flex">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 text-blue-600">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 18.75a6 6 0 0 0 6-6v-1.5m-6 7.5a6 6 0 0 1-6-6v-1.5m6 7.5v3.75m-3.75 0h7.5M12 15.75a3 3 0 0 1-3-3V4.5a3 3 0 1 1 6 0v8.25a3 3 0 0 1-3 3Z" />
-                </svg>
-            </span> then read the sentence aloud</p>
+            <p className="mt-7 sm:mt-3 text-center font-medium tracking-wide">
+                <span className="inline-flex align-middle">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 text-blue-600">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 18.75a6 6 0 0 0 6-6v-1.5m-6 7.5a6 6 0 0 1-6-6v-1.5m6 7.5v3.75m-3.75 0h7.5M12 15.75a3 3 0 0 1-3-3V4.5a3 3 0 1 1 6 0v8.25a3 3 0 0 1-3 3Z" />
+                    </svg>
+                </span>
+                Respond as naturally as you can
+            </p>
             <div className="w-full sm:max-w-[80%] mx-auto my-4 relative flex">
-                {/* Always show the gradient border, even if the card is short */}
-                <div className="absolute left-0 top-0 h-full w-[5px] sm:w-[6px] rounded-l-2xl bg-gradient-to-b from-blue-500 via-indigo-500 to-purple-500 shadow-lg z-10"></div>
+                {/* Gradient border on the right for visual difference */}
+                <div className="absolute right-0 top-0 h-full w-[5px] sm:w-[6px] rounded-r-2xl bg-gradient-to-b from-blue-500 via-indigo-500 to-purple-500 shadow-lg z-10"></div>
                 <div className="flex-1 min-h-[40vh] max-h-fit sm:px-8 p-8 xs:px-4
                       flex flex-col items-center justify-around 
-                      bg-white rounded-r-2xl shadow-2xl relative z-20 border border-gray-100 ml-[5px] sm:ml-[5px]">
+                      bg-white rounded-l-2xl shadow-2xl relative z-20 border border-gray-100 mr-[5px] sm:mr-[5px]">
+                    <h2 className="text-lg font-bold mb-4 tracking-tight">Answer the question below</h2>
                     <DialogBox />
-
-                    <RecordBtn onAudioRecorded={handleAudioRecorded} />
+                    <div className="mt-6">
+                        <RecordBtn onAudioRecorded={handleAudioRecorded} />
+                    </div>
                 </div>
             </div>
 

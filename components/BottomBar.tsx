@@ -24,11 +24,11 @@ export default function BottomBar({ audioSrc, onSkip, onSubmit, disabled = false
     };
 
     return (
-        <div className="sm:mt-10 sm:bg-white sm:rounded-full grid items-center grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4 w-full lg:w-[85%]  mx-auto px-4 py-3 sm:shadow-lg">
+        <div className="sm:mt-10 bg-gradient-to-r from-blue-50 via-indigo-50 to-purple-50/70 sm:bg-white/80 sm:rounded-full rounded-lg w-full max-w-2xl mx-auto px-2 py-3 sm:shadow-lg border border-indigo-100 flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-6">
             {/* Skip Button */}
             <button
                 onClick={onSkip}
-                className="bg-white inset-shadow-sm inset-shadow-gray-300  w-[12vw] min-w-[130px] px-5 py-2 sm:py-5 outline-2 rounded-full text-gray-500 hover:bg-gray-50 hover:border-gray-400  transition-all flex items-center justify-center gap-2 sm:order-1"
+                className="bg-white/90 shadow-sm w-[60vw] sm:w-[220px] min-w-[140px] px-6 py-2 sm:py-3 rounded-full text-gray-500 hover:bg-blue-50 hover:text-blue-700 transition-all flex items-center justify-center gap-2"
             >
                 Skip
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
@@ -36,50 +36,53 @@ export default function BottomBar({ audioSrc, onSkip, onSubmit, disabled = false
                 </svg>
             </button>
 
-            {/* Audio Player - Full width on mobile, middle column on desktop */}
-            <div className="bg-gray-0  shadow-lg col-span-2 sm:col-span-1 flex items-center justify-center space-x-3 px-1 sm:px-7 md:px-10 lg:w-full sm:m-auto py-3.5 mt-2 rounded-full  sm:order-2 order-last">
-                <button
-                    onClick={handlePlayPause}
-                    className="text-gray-600 hover:text-gray-800 focus:outline-none"
-                >
-                    {isPlaying ? (
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                            <rect x="6" y="4" width="4" height="16" rx="1" />
-                            <rect x="14" y="4" width="4" height="16" rx="1" />
-                        </svg>
+            {/* Audio + Submit Group */}
+            <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-3 w-full sm:w-auto justify-end">
+                {/* Audio Player */}
+                <div className="bg-white/80 shadow flex items-center justify-center space-x-3 px-1 sm:px-7 md:px-10 w-full sm:w-auto py-3 rounded-full">
+                    <button
+                        onClick={handlePlayPause}
+                        className="text-blue-600 hover:text-indigo-700 focus:outline-none"
+                    >
+                        {isPlaying ? (
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                <rect x="6" y="4" width="4" height="16" rx="1" />
+                                <rect x="14" y="4" width="4" height="16" rx="1" />
+                            </svg>
+                        ) : (
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M8 5v14l11-7z" />
+                            </svg>
+                        )}
+                    </button>
+
+                    <audio
+                        ref={audioRef}
+                        src={audioSrc}
+                        className="hidden"
+                        onEnded={() => setIsPlaying(false)}
+                    />
+
+                    {audioSrc ? (
+                        <span className="text-sm text-blue-700 font-medium">Play Recording</span>
                     ) : (
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M8 5v14l11-7z" />
-                        </svg>
+                        <span className="text-sm text-gray-400">No recording</span>
                     )}
+                </div>
+
+                {/* Submit Button */}
+                <button
+                    onClick={onSubmit}
+                    disabled={disabled || !audioSrc}
+                    className={`bg-gradient-to-r from-blue-500 to-indigo-500 w-[40vw] sm:w-auto min-w-[110px] px-4 py-2 sm:py-3 rounded-full transition-all flex items-center justify-center text-white font-semibold shadow
+                        ${audioSrc
+                            ? 'hover:from-blue-600 hover:to-indigo-600 focus:outline-none focus:ring-2 focus:ring-blue-300'
+                            : 'opacity-60 cursor-not-allowed'
+                        }`}
+                >
+                    Submit
                 </button>
-
-                <audio
-                    ref={audioRef}
-                    src={audioSrc}
-                    className="hidden"
-                    onEnded={() => setIsPlaying(false)}
-                />
-
-                {audioSrc ? (
-                    <span className="text-sm text-gray-500">Play Recording</span>
-                ) : (
-                    <span className="text-sm text-gray-400">No recording</span>
-                )}
             </div>
-
-            {/* Submit Button */}
-            <button
-                onClick={onSubmit}
-                disabled={disabled || !audioSrc}
-                className={`bg-white inset-shadow-sm inset-shadow-gray-300 w-[12vw] min-w-[130px] px-5 py-2 sm:py-5 outline-2 rounded-full transition-all flex items-center justify-center sm:order-3 ms-auto
-                    ${audioSrc
-                        ? 'text-green-800 outline-green-400 hover:bg-blue-50 hover:text-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-300'
-                        : 'text-gray-500 cursor-not-allowed'
-                    }`}
-            >
-                Submit
-            </button>
         </div>
     );
 };
