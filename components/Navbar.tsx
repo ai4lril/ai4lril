@@ -37,13 +37,13 @@ export default function Navbar() {
                     <div className="flex items-center">
                         {/* Desktop menu */}
                         <div className="hidden md:flex">
-                            <ul className="flex space-x-8 items-center">
+                            <ul className="flex items-center text-center gap-10">
                                 {navbarItems.map((item) => {
                                     return (
                                         <li key={item.path}>
                                             <Link
                                                 href={item.path}
-                                                className="text-gray-700 hover:text-blue-500 hover:border-b-3 px-2 py-1 "
+                                                className="text-gray-700 hover:text-blue-500 hover:border-b-3 pb-1  text-center "
                                             >
                                                 {item.name}
                                             </Link>

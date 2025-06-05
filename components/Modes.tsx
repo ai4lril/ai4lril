@@ -22,7 +22,7 @@ export default function Modes() {
 
     return (
         <div className="flex justify-around items-center bg-gray-100 border-t border-gray-200">
-            <ul className="flex">
+            <ul className="flex flex-wrap w-full justify-center">
                 {currentModes.map((mode) => {
                     const href = `/${mode.toLowerCase()}`;
                     const isActive = pathname === href;
