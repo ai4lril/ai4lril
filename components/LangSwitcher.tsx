@@ -19,37 +19,39 @@ export default function LangSwitcher() {
     const [isOpen, setIsOpen] = useState<boolean>(false);
 
     return (
-        <div>
+        <div className="relative inline-block text-left">
             <button
-                className="flex items-center justify-between border-1 py-1 px-2 w-20 h-8"
+                className="flex items-center justify-between gap-2 border border-gray-300 rounded-md px-3 py-1.5 text-sm bg-white hover:shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
                 onClick={() => setIsOpen(!isOpen)}
             >
-                <span className="text-[12px]">
-                    {selectedLanguage.code}
-                </span>
-                <span className="flex items-center justify-center">
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-4 w-4"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                    >
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                    </svg>
-                </span>
+                <span className="capitalize font-medium">{selectedLanguage.name}</span>
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className={`h-4 w-4 transform transition-transform ${isOpen ? "rotate-180" : "rotate-0"}`}
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
             </button>
 
             {isOpen && (
-                <div className="absolute bg-white border rounded shadow-lg mt-2 w-40">
-                    <ul className="p-2">
+                <div className="absolute z-10 mt-2 w-44 bg-white border border-gray-200 rounded-md shadow-lg">
+                    <ul className="py-1">
                         {languages.map((lang) => (
                             <li key={lang.code}>
-                                <button onClick={() => setSelectedLanguage({ name: lang.name, code: lang.code })}>
+                                <button
+                                    className={`w-full text-left px-4 py-2 text-sm hover:bg-blue-100 transition ${selectedLanguage.code === lang.code ? "bg-blue-50 font-semibold" : ""
+                                        }`}
+                                    onClick={() => {
+                                        setSelectedLanguage(lang);
+                                        setIsOpen(false);
+                                    }}
+                                >
                                     {lang.name}
                                 </button>
                             </li>
-
                         ))}
                     </ul>
                 </div>

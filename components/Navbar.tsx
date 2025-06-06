@@ -43,7 +43,10 @@ export default function Navbar() {
                                         <li key={item.path}>
                                             <Link
                                                 href={item.path}
-                                                className="text-gray-700 hover:text-blue-500 hover:border-b-3 pb-1  text-center "
+                                                className="relative text-gray-700 pb-1 text-center transition-colors duration-300 hover:text-blue-500
+                                                    after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[3px] after:bg-blue-500 after:rounded-full
+                                                    after:transition-all after:duration-300 hover:after:w-full"
+                                                style={{ display: "inline-block" }}
                                             >
                                                 {item.name}
                                             </Link>
@@ -53,10 +56,11 @@ export default function Navbar() {
                             </ul>
                         </div>
 
-                        <div className="hidden min-[425px]:block ml-8">
+                        <div className="flex justify-center items-center">
                             <Link
                                 href="/login"
-                                className="border border-slate-600 hover:bg-blue-50 hover:outline px-5 py-2 text-sm rounded-full transition-colors duration-300"
+                                className="ml-8 hidden sm:block bg-gradient-to-r from-blue-500 to-indigo-500 text-white font-semibold px-6 py-2 rounded-full shadow hover:from-blue-600 hover:to-indigo-600 transition-all duration-200 border-0 outline-none focus:ring-2 focus:ring-blue-300"
+                                onClick={() => setIsMenuOpen(false)}
                             >
                                 Login
                             </Link>
@@ -89,36 +93,42 @@ export default function Navbar() {
 
 
                 {/* Mobile menu */}
-                {isMenuOpen && (
-                    <div className="md:hidden fixed w-[100vw] rounded-b-2xl mt-4 bg-white border-t border-gray-100 animate-fadeIn shadow-xl/20">
-                        <ul className="flex flex-col space-y-4 py-4">
-                            {navbarItems.map((item) => {
-                                return (
-                                    <li key={item.path}>
-                                        <Link
-                                            href={item.path}
-                                            className="text-gray-700 hover:text-blue-500 px-4 py-2 flex justify-center  transition-colors duration-300"
-                                        >
-                                            {item.name}
-                                        </Link>
-                                    </li>
-
-                                );
-                            })}
-                            <li>
-                                <div className='flex justify-center items-center '>
+                <div
+                    className={`md:hidden fixed w-[100vw] rounded-b-2xl mt-4 bg-white border-t border-gray-100 shadow-xl/20 z-50
+                        transition-transform duration-500 ease-in-out
+                        ${isMenuOpen ? "translate-y-0 opacity-100 pointer-events-auto" : "-translate-y-10 opacity-0 pointer-events-none"}`}
+                    style={{ willChange: "transform, opacity" }}
+                >
+                    <ul className="flex flex-col space-y-4 py-4">
+                        {navbarItems.map((item) => {
+                            return (
+                                <li key={item.path}>
                                     <Link
-                                        href="/login"
-                                        className="min-[425px]:hidden border border-slate-600 hover:bg-blue-50 hover:outline px-5 py-2 text-sm rounded-full"
+                                        href={item.path}
+                                        className="relative text-gray-700 px-4 py-2 flex justify-center transition-colors duration-300 hover:text-blue-500
+                                            after:absolute after:left-1/2 after:-translate-x-1/2 after:bottom-1 after:w-0 after:h-[2px] after:bg-blue-500 after:rounded-full
+                                            after:transition-all after:duration-300 hover:after:w-3/4"
+                                        style={{ display: "inline-block" }}
+                                        onClick={() => setIsMenuOpen(false)}
                                     >
-                                        Login
+                                        {item.name}
                                     </Link>
-                                </div>
-
-                            </li>
-                        </ul>
-                    </div>
-                )}
+                                </li>
+                            );
+                        })}
+                        <li>
+                            <div className="flex justify-center items-center">
+                                <Link
+                                    href="/login"
+                                    className="sm:hidden border border-slate-400 text-gray-700 bg-white hover:bg-blue-50 px-5 py-2 text-sm rounded-full transition-colors duration-200 shadow-sm"
+                                    onClick={() => setIsMenuOpen(false)}
+                                >
+                                    Login
+                                </Link>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
 
 
             </div>
