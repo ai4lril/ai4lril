@@ -38,7 +38,17 @@ export default function Speak() {
     const handleSubmit = () => {
         if (recordedAudio) {
             console.log("Submitting audio:", recordedAudio.name);
-            // Here you would handle the submission logic
+            // Save the audio file by triggering a download
+            const url = URL.createObjectURL(recordedAudio);
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = recordedAudio.name || "recording.webm";
+            document.body.appendChild(a);
+            a.click();
+            setTimeout(() => {
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            }, 100);
 
             // Reset audio state after submission
             setRecordedAudio(null);
