@@ -1,29 +1,47 @@
 {
     "name": "voice-data-collection",
-    "version": "0.1.0",
+    "version": "1.0.0",
+    "description": "Voice data collection application with frontend and backend",
     "private": true,
     "scripts": {
-        "dev": "next dev --turbopack",
-        "build": "next build",
-        "start": "next start",
-        "lint": "next lint"
-    },
-    "dependencies": {
-        "next": "15.3.2",
-        "react": "^19.0.0",
-        "react-dom": "^19.0.0"
+        "dev": "npm run dev:both",
+        "dev:frontend": "cd frontend && npm run dev",
+        "dev:backend": "cd backend && npm run start:dev",
+        "dev:both": "concurrently \"npm run dev:frontend\" \"npm run dev:backend\"",
+        "dev:docker": "cd backend && docker-compose up -d && npm run dev:backend",
+        "start": "npm run start:both",
+        "start:frontend": "cd frontend && npm run start",
+        "start:backend": "cd backend && npm run start:prod",
+        "start:both": "concurrently \"npm run start:frontend\" \"npm run start:backend\"",
+        "build": "npm run build:both",
+        "build:frontend": "cd frontend && npm run build",
+        "build:backend": "cd backend && npm run build",
+        "build:both": "npm run build:frontend && npm run build:backend",
+        "install:all": "npm install && cd frontend && npm install && cd ../backend && npm install",
+        "clean": "cd frontend && npm run clean 2>/dev/null || true && cd ../backend && npm run clean 2>/dev/null || true",
+        "lint": "npm run lint:both",
+        "lint:frontend": "cd frontend && npm run lint",
+        "lint:backend": "cd backend && npm run lint",
+        "lint:both": "concurrently \"npm run lint:frontend\" \"npm run lint:backend\"",
+        "test": "npm run test:both",
+        "test:frontend": "cd frontend && npm run test",
+        "test:backend": "cd backend && npm run test",
+        "test:both": "concurrently \"npm run test:frontend\" \"npm run test:backend\""
     },
     "devDependencies": {
-        "@eslint/eslintrc": "^3",
-        "@stagewise/toolbar-next": "^0.1.2",
-        "@tailwindcss/postcss": "^4",
-        "@types/node": "^20",
-        "@types/react": "^19",
-        "@types/react-dom": "^19",
-        "eslint": "^9",
-        "eslint-config-next": "15.3.2",
-        "prettier": "^3.5.3",
-        "tailwindcss": "^4",
-        "typescript": "^5"
-    }
+        "concurrently": "^8.2.2"
+    },
+    "engines": {
+        "node": ">=18.0.0",
+        "npm": ">=8.0.0"
+    },
+    "keywords": [
+        "voice",
+        "data-collection",
+        "nextjs",
+        "nestjs",
+        "typescript"
+    ],
+    "author": "",
+    "license": "UNLICENSED"
 }
