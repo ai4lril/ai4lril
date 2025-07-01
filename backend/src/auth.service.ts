@@ -2,11 +2,18 @@ import { Injectable, UnauthorizedException, ConflictException } from '@nestjs/co
 import { UserService } from './user.service';
 import * as jwt from 'jsonwebtoken';
 
+/**
+ * Data Transfer Object for login requests
+ */
 export interface LoginDto {
     email: string;
     password: string;
 }
 
+/**
+ * Data Transfer Object for registration requests
+ * Only requires essential fields for minimal signup
+ */
 export interface RegisterDto {
     email: string;
     password: string;
@@ -28,11 +35,39 @@ export interface RegisterDto {
     fifth_language?: string;
 }
 
+/**
+ * AuthService
+ * 
+ * Handles all authentication-related business logic including:
+ * - User login with email/password verification
+ * - User registration with minimal required fields
+ * - JWT token generation and validation
+ * - Password security using bcrypt
+ * 
+ * Security features:
+ * - Passwords are hashed using bcrypt with salt rounds of 12
+ * - JWT tokens expire after 24 hours
+ * - User email and username uniqueness validation
+ * - Consistent error messages to prevent user enumeration
+ */
 @Injectable()
 export class AuthService {
     private readonly jwtSecret = process.env.JWT_SECRET || 'your-secret-key-change-in-production';
+    private readonly jwtExpirationTime = '24h';
 
-    constructor(private userService: UserService) { }
+    constructor(private userService: UserService) {
+        // Warn if using default JWT secret in production
+        if (process.env.NODE_ENV === 'production' && this.jwtSecret === 'your-secret-key-change-in-production') {
+            console.warn('WARNING: Using default JWT secret in production. Please set JWT_SECRET environment variable.');
+        }
+    }
+
+    /**
+     * Authenticates a user with email and password
+     * @param loginDto - Login credentials
+     * @returns Promise containing user data and JWT token
+     * @throws UnauthorizedException if credentials are invalid
+     */
 
     async login(loginDto: LoginDto) {
         const { email, password } = loginDto;
@@ -40,16 +75,18 @@ export class AuthService {
         // Find user by email
         const user = await this.userService.findUserByEmail(email);
         if (!user) {
+            // Use generic error message to prevent user enumeration
             throw new UnauthorizedException('Invalid email or password');
         }
 
         // Validate password
         const isPasswordValid = await this.userService.validatePassword(password, user.password);
         if (!isPasswordValid) {
+            // Use same error message as above to prevent user enumeration
             throw new UnauthorizedException('Invalid email or password');
         }
 
-        // Generate JWT token
+        // Generate JWT token with user information
         const token = jwt.sign(
             {
                 userId: user.id,
@@ -57,7 +94,7 @@ export class AuthService {
                 username: user.username
             },
             this.jwtSecret,
-            { expiresIn: '24h' }
+            { expiresIn: this.jwtExpirationTime }
         );
 
         return {
@@ -72,6 +109,13 @@ export class AuthService {
             token,
         };
     }
+
+    /**
+     * Registers a new user with minimal required information
+     * @param registerDto - Registration data including email, password, and username
+     * @returns Promise containing new user data and JWT token
+     * @throws ConflictException if email or username already exists
+     */
 
     async register(registerDto: RegisterDto) {
         const { email, username, password } = registerDto;
