@@ -1,6 +1,8 @@
+// Profile page: shows user info and contribution stats
 "use client";
 
 export default function Profile() {
+    // TODO: Replace with real user data from API or context
     const profileData = {
         user: {
             name: "John Doe",
@@ -16,8 +18,10 @@ export default function Profile() {
 
     return (
         <div className="flex h-full w-full flex-col items-center justify-center">
-            <div className="flex w-full xs:flex-row items-center justify-between rounded-xl border border-blue-300/30 bg-gradient-to-br from-blue-100 to-purple-100 p-8 shadow-2xl">
+            {/* Card: user avatar, name, email, and stats */}
+            <div className="xs:flex-row flex w-full items-center justify-between rounded-xl border border-blue-300/30 bg-gradient-to-br from-blue-100 to-purple-100 p-8 shadow-2xl">
                 <div>
+                    {/* Avatar and user info */}
                     <div className="mb-4 flex h-24 w-24 items-center justify-center rounded-full bg-gradient-to-br from-blue-500 to-purple-600 shadow-lg">
                         <span className="text-3xl text-white">🎤</span>
                     </div>
@@ -28,7 +32,9 @@ export default function Profile() {
                         {profileData.user.email}
                     </p>
                 </div>
+                {/* Stats: voice samples, total time, quality score, languages */}
                 <div className="xs:flex-row xs:gap-2 xs:divide-y-0 xs:divide-x flex flex-col gap-6 divide-y divide-blue-300/30">
+                    {/* Each stat is a column on desktop, row on mobile */}
                     <div className="xs:text-left xs:py-0 xs:px-6 xs:first:pl-0 xs:last:pr-0 py-4 text-center first:pt-0 last:pb-0">
                         <p className="text-sm font-medium text-blue-600">
                             Voice Samples

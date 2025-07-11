@@ -1,18 +1,15 @@
-
+// Displays a sample dialog or prompt text
 export default function DialogBox() {
     return (
-
-
         <p
-            className="text-center font-semibold break-words pt-3"
+            className="pt-3 text-center font-semibold break-words"
             style={{
-                fontSize: 'clamp(1rem, 2vw, 1.25rem)',
-                lineHeight: '1.4',
+                fontSize: "clamp(1rem, 2vw, 1.25rem)",
+                lineHeight: "1.4",
             }}
         >
-          
-          ex recusandae nesciunt tempora in. Obcaecati numquam sunt possimatur temporibus.
+            ex recusandae nesciunt tempora in. Obcaecati numquam sunt possimatur
+            temporibus.
         </p>
-
     );
 }

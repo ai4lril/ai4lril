@@ -1,7 +1,4 @@
+// Home page (currently empty)
 export default function Home() {
-    return (
-        <div>
-            
-        </div>
-    );
+    return <div>{/* Add landing content here */}</div>;
 }

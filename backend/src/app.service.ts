@@ -1,3 +1,4 @@
+// Service for root controller (demo/health)
 import { Injectable } from '@nestjs/common';
 
 @Injectable()

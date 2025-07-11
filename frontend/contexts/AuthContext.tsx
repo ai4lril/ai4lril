@@ -1,6 +1,8 @@
-'use client';
+"use client";
 
-import React, { createContext, useContext, useEffect, useState } from 'react';
+// Authentication context and provider for user session management
+
+import React, { createContext, useContext, useEffect, useState } from "react";
 
 /**
  * User interface representing the authenticated user's data
@@ -30,19 +32,20 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 /**
  * AuthProvider Component
- * 
+ *
  * Provides authentication context to the entire application.
  * Handles:
  * - Token storage and retrieval from localStorage
  * - User session persistence across browser sessions
  * - Token validation and expiration checking
  * - Secure logout functionality
- * 
+ *
  * Security considerations:
  * - Validates stored tokens before using them
  * - Handles localStorage safely for SSR compatibility
  * - Clears invalid/expired tokens automatically
  */
+// Provides authentication state and actions to the app
 export function AuthProvider({ children }: { children: React.ReactNode }) {
     const [user, setUser] = useState<User | null>(null);
     const [token, setToken] = useState<string | null>(null);
@@ -53,14 +56,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
      * @param token - JWT token string
      * @returns boolean indicating if token is valid (not expired)
      */
+    // Checks if a JWT token is not expired
     const isTokenValid = (token: string): boolean => {
         try {
             // Decode JWT payload without verification (just for expiration check)
-            const payload = JSON.parse(atob(token.split('.')[1]));
+            const payload = JSON.parse(atob(token.split(".")[1]));
             const currentTime = Date.now() / 1000;
             return payload.exp && payload.exp > currentTime;
         } catch (error) {
-            console.warn('Invalid token format:', error);
+            console.warn("Invalid token format:", error);
             return false;
         }
     };
@@ -70,12 +74,16 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
      * @param key - localStorage key
      * @returns stored value or null
      */
+    // SSR-safe localStorage getter
     const getStoredItem = (key: string): string | null => {
-        if (typeof window === 'undefined') return null;
+        if (typeof window === "undefined") return null;
         try {
             return localStorage.getItem(key);
         } catch (error) {
-            console.warn(`Failed to access localStorage for key ${key}:`, error);
+            console.warn(
+                `Failed to access localStorage for key ${key}:`,
+                error,
+            );
             return null;
         }
     };
@@ -85,8 +93,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
      * @param key - localStorage key
      * @param value - value to store
      */
+    // SSR-safe localStorage setter
     const setStoredItem = (key: string, value: string): void => {
-        if (typeof window === 'undefined') return;
+        if (typeof window === "undefined") return;
         try {
             localStorage.setItem(key, value);
         } catch (error) {
@@ -98,45 +107,41 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
      * Safely remove localStorage item
      * @param key - localStorage key
      */
+    // SSR-safe localStorage remover
     const removeStoredItem = (key: string): void => {
-        if (typeof window === 'undefined') return;
+        if (typeof window === "undefined") return;
         try {
             localStorage.removeItem(key);
         } catch (error) {
-            console.warn(`Failed to remove localStorage for key ${key}:`, error);
+            console.warn(
+                `Failed to remove localStorage for key ${key}:`,
+                error,
+            );
         }
     };
 
     useEffect(() => {
-        // Check if user is logged in on app start
-        const storedToken = getStoredItem('auth-token');
-        const storedUser = getStoredItem('user');
-
+        // Restore session from localStorage on mount
+        const storedToken = getStoredItem("auth-token");
+        const storedUser = getStoredItem("user");
         if (storedToken && storedUser) {
             try {
-                // Validate token expiration
                 if (!isTokenValid(storedToken)) {
-                    console.warn('Stored token is expired, clearing session');
-                    removeStoredItem('auth-token');
-                    removeStoredItem('user');
+                    removeStoredItem("auth-token");
+                    removeStoredItem("user");
                     setLoading(false);
                     return;
                 }
-
                 const userData = JSON.parse(storedUser);
-
-                // Validate user data structure
                 if (userData.id && userData.email && userData.username) {
                     setToken(storedToken);
                     setUser(userData);
                 } else {
-                    throw new Error('Invalid user data structure');
+                    throw new Error("Invalid user data structure");
                 }
             } catch (error) {
-                console.warn('Invalid stored session data, clearing:', error);
-                // Invalid stored data, clear it
-                removeStoredItem('auth-token');
-                removeStoredItem('user');
+                removeStoredItem("auth-token");
+                removeStoredItem("user");
             }
         }
         setLoading(false);
@@ -149,19 +154,24 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
      */
     const login = (newToken: string, newUser: User) => {
         // Validate inputs
-        if (!newToken || !newUser?.id || !newUser?.email || !newUser?.username) {
-            console.error('Invalid login data provided');
+        if (
+            !newToken ||
+            !newUser?.id ||
+            !newUser?.email ||
+            !newUser?.username
+        ) {
+            console.error("Invalid login data provided");
             return;
         }
 
         // Validate token
         if (!isTokenValid(newToken)) {
-            console.error('Provided token is invalid or expired');
+            console.error("Provided token is invalid or expired");
             return;
         }
 
-        setStoredItem('auth-token', newToken);
-        setStoredItem('user', JSON.stringify(newUser));
+        setStoredItem("auth-token", newToken);
+        setStoredItem("user", JSON.stringify(newUser));
         setToken(newToken);
         setUser(newUser);
     };
@@ -170,8 +180,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
      * Logout function to clear all session data
      */
     const logout = () => {
-        removeStoredItem('auth-token');
-        removeStoredItem('user');
+        removeStoredItem("auth-token");
+        removeStoredItem("user");
         setToken(null);
         setUser(null);
     };
@@ -186,9 +196,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     };
 
     return (
-        <AuthContext.Provider value={value}>
-            {children}
-        </AuthContext.Provider>
+        <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
     );
 }
 
@@ -200,7 +208,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 export function useAuth() {
     const context = useContext(AuthContext);
     if (context === undefined) {
-        throw new Error('useAuth must be used within an AuthProvider');
+        throw new Error("useAuth must be used within an AuthProvider");
     }
     return context;
 }

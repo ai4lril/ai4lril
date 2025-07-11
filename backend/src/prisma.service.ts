@@ -1,18 +1,21 @@
+// Prisma service for database connection and lifecycle hooks
 import { Injectable, OnModuleInit } from '@nestjs/common';
 import { PrismaClient } from '../generated/prisma';
 
 @Injectable()
 export class PrismaService extends PrismaClient implements OnModuleInit {
-    constructor() {
-        super();
-    }
+  constructor() {
+    super();
+  }
 
-    async onModuleInit() {
-        await this.$connect();
-        console.log('📅 Database connected successfully');
-    }
+  // Connect to database on module init
+  async onModuleInit() {
+    await this.$connect();
+    console.log('\u1f4c5 Database connected successfully');
+  }
 
-    async onModuleDestroy() {
-        await this.$disconnect();
-    }
+  // Disconnect on module destroy
+  async onModuleDestroy() {
+    await this.$disconnect();
+  }
 }
