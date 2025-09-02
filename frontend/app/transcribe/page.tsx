@@ -1,12 +1,26 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import TextBox from "@/components/TextBox";
+import { codeToLabel } from "@/lib/languages";
+import { getPreferredLanguage } from "@/lib/langPreference";
 
 export default function TranscribePage() {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [submitted, setSubmitted] = useState(false);
     const [skipped, setSkipped] = useState(false);
+    const [lang, setLang] = useState<string | null>(null);
+
+    useEffect(() => {
+        const saved = getPreferredLanguage();
+        setLang(saved);
+        function onLangChanged(e: Event) {
+            const code = (e as CustomEvent<string>).detail;
+            setLang(code);
+        }
+        window.addEventListener('language-changed', onLangChanged as EventListener);
+        return () => window.removeEventListener('language-changed', onLangChanged as EventListener);
+    }, []);
 
     const handleSubmit = (transcript: string) => {
         setIsSubmitting(true);
@@ -16,6 +30,7 @@ export default function TranscribePage() {
             setSubmitted(true);
             setTimeout(() => setSubmitted(false), 2000);
         }, 1000);
+        console.log(transcript);
     };
 
     const handleSkip = () => {
@@ -25,13 +40,16 @@ export default function TranscribePage() {
 
     return (
         <div className="w-full max-w-2xl md:max-w-4xl py-4 px-1 sm:px-2 md:px-4 mx-auto">
-            <h1 className="text-2xl md:text-3xl font-bold text-center mb-2">Transcribe Audio Clip</h1>
+            <h1 className="text-2xl md:text-3xl font-bold text-center mb-1">Transcribe Audio Clip</h1>
+            <div className="text-center mb-3">
+                <span className="inline-block text-xs px-2 py-1 rounded-full bg-indigo-50 text-indigo-700 border border-indigo-200">{codeToLabel(lang)}</span>
+            </div>
             <p className="text-center text-gray-600 mb-4 md:mb-6 text-base md:text-lg">
                 Listen to the audio and type exactly what you hear. Your transcription helps us build better voice technology.
             </p>
             <div className="w-full relative">
                 <div className="absolute inset-0 bg-gradient-to-br from-cyan-50/40 to-indigo-100/30 -z-10 rounded-xl blur-xl hidden md:block"></div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 w-full">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 w-full card-wide">
                     {/* Audio Player Section */}
                     <div className="bg-white/95 backdrop-blur rounded-xl p-3 sm:p-4 md:p-6 shadow-lg border border-gray-100 flex flex-col items-center justify-center min-h-[220px] sm:min-h-[260px] md:min-h-[340px] relative overflow-hidden">
                         {/* Decorative circles */}

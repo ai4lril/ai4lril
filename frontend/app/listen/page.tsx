@@ -2,8 +2,23 @@
 
 import DialogBox from "@/components/DialogBox";
 import BottomBar from "@/components/BottomBar";
+import { useEffect, useState } from "react";
+import { codeToLabel } from "@/lib/languages";
+import { getPreferredLanguage } from "@/lib/langPreference";
 
 export default function Listen() {
+    const [lang, setLang] = useState<string | null>(null);
+
+    useEffect(() => {
+        const saved = getPreferredLanguage();
+        setLang(saved);
+        function onLangChanged(e: Event) {
+            const code = (e as CustomEvent<string>).detail;
+            setLang(code);
+        }
+        window.addEventListener('language-changed', onLangChanged as EventListener);
+        return () => window.removeEventListener('language-changed', onLangChanged as EventListener);
+    }, []);
     return (
         <div className="flex flex-col items-center w-full h-full justify-center gap ">
             <p className="mt-7 sm:mt-3 text-center">click <span className="inline-flex">
@@ -11,7 +26,11 @@ export default function Listen() {
                     <path strokeLinecap="round" strokeLinejoin="round" d="M12 18.75a6 6 0 0 0 6-6v-1.5m-6 7.5a6 6 0 0 1-6-6v-1.5m6 7.5v3.75m-3.75 0h7.5M12 15.75a3 3 0 0 1-3-3V4.5a3 3 0 1 1 6 0v8.25a3 3 0 0 1-3 3Z" />
                 </svg>
             </span> to see if acuarately spoke the sentence </p>
-            <div className="w-full sm:max-w-[80%] mx-auto my-4 relative flex">
+            <div className="w-full card-wide mx-auto my-2 relative flex flex-col">
+                <div className="text-center mb-2">
+                    <span className="inline-block text-xs px-2 py-1 rounded-full bg-indigo-50 text-indigo-700 border border-indigo-200">{codeToLabel(lang)}</span>
+                </div>
+                <div className="w-full relative">
                 {/* Always show the gradient border, even if the card is short */}
                 <div className="absolute left-0 top-0 h-full w-[5px] sm:w-[6px] rounded-l-2xl bg-gradient-to-b from-blue-500 via-indigo-500 to-purple-500 shadow-lg z-10"></div>
                 <div className="flex-1 min-h-[40vh] max-h-fit sm:px-8 p-8 xs:px-4
@@ -32,6 +51,7 @@ export default function Listen() {
                             No
                         </button>
                     </div>
+                </div>
                 </div>
             </div>
 

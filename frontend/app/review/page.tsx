@@ -1,12 +1,26 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import TextBox from "@/components/TextBox";
+import { codeToLabel } from "@/lib/languages";
+import { getPreferredLanguage } from "@/lib/langPreference";
 
 export default function Review() {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [submitted, setSubmitted] = useState(false);
     const [skipped, setSkipped] = useState(false);
+    const [lang, setLang] = useState<string | null>(null);
+
+    useEffect(() => {
+        const saved = getPreferredLanguage();
+        setLang(saved);
+        function onLangChanged(e: Event) {
+            const code = (e as CustomEvent<string>).detail;
+            setLang(code);
+        }
+        window.addEventListener('language-changed', onLangChanged as EventListener);
+        return () => window.removeEventListener('language-changed', onLangChanged as EventListener);
+    }, [lang]);
 
     const handleSubmit = (transcript: string) => {
         setIsSubmitting(true);
@@ -16,6 +30,7 @@ export default function Review() {
             setSubmitted(true);
             setTimeout(() => setSubmitted(false), 2000);
         }, 1000);
+        console.log(transcript);
     };
 
     const handleSkip = () => {
@@ -25,7 +40,10 @@ export default function Review() {
 
     return (
         <div className="w-full max-w-2xl md:max-w-4xl py-4 px-1 sm:px-2 md:px-4 mx-auto">
-            <h1 className="text-2xl md:text-3xl font-bold text-center mb-2">Review Transcription</h1>
+            <h1 className="text-2xl md:text-3xl font-bold text-center mb-1">Review Transcription</h1>
+            <div className="text-center mb-3">
+                <span className="inline-block text-xs px-2 py-1 rounded-full bg-indigo-50 text-indigo-700 border border-indigo-200">{codeToLabel(lang)}</span>
+            </div>
             <p className="text-center text-gray-600 mb-4 md:mb-6 text-base md:text-lg">
                 Listen to the audio and review the provided transcription. Make corrections if needed, then submit your review.
             </p>

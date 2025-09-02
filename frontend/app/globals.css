@@ -1,9 +1,15 @@
 @import "tailwindcss";
 
 :root {
-    /* bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-100 */
-    --background: linear-gradient(to bottom right, #eff6ff 0%, #eef2ff 50%, #f3e8ff 100%);
+    /* Soft layered gradient with subtle radial accents */
+    --background:
+        radial-gradient(40% 40% at 0% 0%, rgba(59, 130, 246, 0.12), transparent 60%),
+        radial-gradient(40% 40% at 100% 100%, rgba(99, 102, 241, 0.12), transparent 60%),
+        linear-gradient(to bottom right, #eff6ff 0%, #eef2ff 50%, #f3e8ff 100%);
     --foreground: #171717;
+    --brand-900: #0f1b3d; /* deep navy for headings */
+    --brand-700: #1e3a8a; /* indigo-800/700 range for accents */
+    --brand-600: #4f46e5; /* indigo-600 */
 }
 
 @theme inline {
@@ -20,4 +26,42 @@ body {
     height: 100vh;
     display: flex;
     flex-direction: column;
+    transition: background-color 200ms ease, color 200ms ease;
 }
+
+h1, h2, h3 { color: var(--brand-900); }
+
+/* Anchor UX: keep room under sticky nav and highlight targets */
+section:target { scroll-margin-top: 96px; }
+section:target h2 { color: var(--brand-700); transition: color 200ms ease; }
+
+/* Enhance rendering and interactions */
+html, body { scroll-behavior: smooth; }
+body { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+
+::selection { background-color: rgba(59, 130, 246, 0.25); color: #0f172a; }
+
+/* Reusable visual utilities */
+.glass {
+    background: rgba(255, 255, 255, 0.65);
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.35);
+}
+
+.card {
+    background: rgba(255, 255, 255, 0.85);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(226, 232, 240, 0.6);
+    box-shadow: 0 10px 30px rgba(30, 41, 59, 0.07);
+}
+
+/* Wider card container for dense layouts (e.g., annotation tables) */
+.card-wide {
+    max-width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* (Removed dark theme variables) */

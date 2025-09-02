@@ -4,12 +4,15 @@ import DialogBox from "@/components/DialogBox"
 import RecordBtn from "@/components/RecordBtn";
 import BottomBar from "@/components/BottomBar";
 import { useState, useEffect } from "react";
+import { codeToLabel } from "@/lib/languages";
+import { getPreferredLanguage } from "@/lib/langPreference";
 
 
 export default function Answer() {
     // State to store the recorded audio file and its URL
     const [recordedAudio, setRecordedAudio] = useState<File | null>(null);
     const [audioUrl, setAudioUrl] = useState<string | undefined>(undefined);
+    const [lang, setLang] = useState<string | null>(null);
 
     // Handle audio recorded from the RecordBtn component
     const handleAudioRecorded = (audioFile: File) => {
@@ -49,17 +52,25 @@ export default function Answer() {
         }
     };
 
-    // Clean up URLs when component unmounts
+    // Init language + clean up URLs when component unmounts
     useEffect(() => {
+        const saved = getPreferredLanguage();
+        setLang(saved);
+        function onLangChanged(e: Event) {
+            const code = (e as CustomEvent<string>).detail;
+            setLang(code);
+        }
+        window.addEventListener('language-changed', onLangChanged as EventListener);
         return () => {
             if (audioUrl) {
                 URL.revokeObjectURL(audioUrl);
             }
+            window.removeEventListener('language-changed', onLangChanged as EventListener);
         };
-    }, []);
+    }, [audioUrl]);
 
     return (
-        <div className="flex flex-col items-center w-full h-full justify-center gap">
+        <div className="flex flex-col items-center w-full h-full justify-center gap-2 px-4 sm:px-6 md:px-8">
             <p className="mt-7 sm:mt-3 text-center font-medium tracking-wide">
                 <span className="inline-flex align-middle">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 text-blue-600">
@@ -68,12 +79,16 @@ export default function Answer() {
                 </span>
                 Respond as naturally as you can
             </p>
-            <div className="w-full sm:max-w-[80%] mx-auto my-4 relative flex">
-                {/* Gradient border on the right for visual difference */}
-                <div className="absolute right-0 top-0 h-full w-[5px] sm:w-[6px] rounded-r-2xl bg-gradient-to-b from-blue-500 via-indigo-500 to-purple-500 shadow-lg z-10"></div>
-                <div className="flex-1 min-h-[40vh] max-h-fit sm:px-8 p-8 xs:px-4
+            <div className="w-full sm:max-w-[80%] mx-auto my-1 relative flex flex-col">
+                <div className="text-center mb-2">
+                    <span className="inline-block text-xs px-2 py-1 rounded-full bg-indigo-50 text-indigo-700 border border-indigo-200">{codeToLabel(lang)}</span>
+                </div>
+                <div className="absolute inset-0 bg-gradient-to-b from-blue-50/30 to-indigo-50/30 -z-10 rounded-xl blur-xl hidden md:block"></div>
+                <div className="flex-1 min-h-[40vh] max-h-fit p-6 sm:p-8
                       flex flex-col items-center justify-around 
-                      bg-white rounded-l-2xl shadow-2xl relative z-20 border border-gray-100 mr-[5px] sm:mr-[5px]">
+                      bg-white/95 backdrop-blur-sm rounded-md md:rounded-lg shadow-md relative z-20 border border-gray-100">
+                    <div className="absolute -right-8 -top-8 w-20 h-20 bg-indigo-100/50 rounded-full opacity-70 hidden sm:block"></div>
+                    <div className="absolute -left-6 -bottom-6 w-16 h-16 bg-blue-100/50 rounded-full opacity-70 hidden sm:block"></div>
                     <div className="flex flex-col items-center">
                         <h2 className="text-lg font-bold mb-4 tracking-tight">Answer the question below</h2>
                         <span className=" block w-[100px] h-[2px] bg-gradient-to-r from-indigo-500 to-purple-500"></span>

@@ -4,6 +4,8 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import Modes from "@/components/Modes";
+import TokenModes from "@/components/TokenModes";
+import TranslateModes from "@/components/TranslateModes";
 
 import LangSwitcher from './LangSwitcher';
 
@@ -17,7 +19,8 @@ const navbarItems: NavbarItem[] = [
     { name: 'Home', path: '/' },
     { name: 'Scripted Speech', path: '/speak' },
     { name: 'Spontaneous Speech', path: '/question' },
-
+    { name: 'Token Classification', path: '/ner' },
+    { name: 'Translation', path: '/translate' },
 ];
 
 export default function Navbar() {
@@ -25,27 +28,30 @@ export default function Navbar() {
     const pathname = usePathname();
 
     return (
-        <nav className='bg-white shadow-md sticky top-0 z-50'>
-            <div className="py-4 md:py-6 ">
+        <nav className='sticky top-0 z-50' role="navigation" aria-label="Primary">
+            <div className="py-3 md:py-4 glass shadow-sm overflow-visible relative z-[70]">
                 <div className="container mx-auto px-4 flex justify-between items-center">
                     <div className="logo">
-                        <Link href="/" className="text-2xl font-bold text-gray-800 hover:text-blue-600 transition-colors duration-300">
-                            Voice Data Collection
+                        <Link href="/" className="text-2xl font-bold" style={{ color: 'var(--brand-900)' }}>
+                            Language Data Collection
                         </Link>
                     </div>
 
                     <div className="flex items-center">
                         {/* Desktop menu */}
                         <div className="hidden md:flex">
-                            <ul className="flex items-center text-center gap-10">
+                            <ul className="flex items-center text-center gap-8">
                                 {navbarItems.map((item) => {
+                                    const isActive = pathname === item.path;
                                     return (
                                         <li key={item.path}>
                                             <Link
                                                 href={item.path}
-                                                className="relative text-gray-700 pb-1 text-center transition-colors duration-300 hover:text-blue-500
-                                                    after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[3px] after:bg-blue-500 after:rounded-full
-                                                    after:transition-all after:duration-300 hover:after:w-full"
+                                                aria-current={isActive ? 'page' : undefined}
+                                                className={`relative pb-1 text-center transition-colors duration-300
+                                                    ${isActive ? 'text-indigo-700' : 'text-gray-700 hover:text-indigo-600'}
+                                                    after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-indigo-600 after:rounded-full
+                                                    after:transition-all after:duration-300 hover:after:w-full`}
                                                 style={{ display: "inline-block" }}
                                             >
                                                 {item.name}
@@ -56,10 +62,10 @@ export default function Navbar() {
                             </ul>
                         </div>
 
-                        <div className="flex justify-center items-center">
+                        <div className="flex justify-center items-center gap-3">
                             <Link
                                 href="/login"
-                                className="ml-8 hidden sm:block bg-gradient-to-r from-blue-500 to-indigo-500 text-white font-semibold px-6 py-2 rounded-full shadow hover:from-blue-600 hover:to-indigo-600 transition-all duration-200 border-0 outline-none focus:ring-2 focus:ring-blue-300"
+                                className="ml-8 hidden sm:block bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-6 py-2 rounded-full shadow transition-all duration-200 border-0 outline-none focus:ring-2 focus:ring-slate-300"
                                 onClick={() => setIsMenuOpen(false)}
                             >
                                 Login
@@ -67,9 +73,7 @@ export default function Navbar() {
                         </div>
 
                         <div className="ml-8">
-                            {['/speak', '/listen', '/write', '/question', '/answer', '/transcribe', '/review'].includes(pathname) && (
-                                <LangSwitcher />
-                            )}
+                            <LangSwitcher />
                         </div>
 
                         {/* Hamburger menu for mobile */}
@@ -77,6 +81,8 @@ export default function Navbar() {
                             <button
                                 onClick={() => setIsMenuOpen(!isMenuOpen)}
                                 aria-label="Toggle menu"
+                                aria-controls="mobile-menu"
+                                aria-expanded={isMenuOpen}
                                 className="focus:outline-none rounded-full p-2 hover:bg-gray-100 transition-colors duration-300"
                                 type="button"
                             >
@@ -91,23 +97,27 @@ export default function Navbar() {
                     </div>
                 </div>
 
-
                 {/* Mobile menu */}
                 <div
-                    className={`md:hidden fixed w-[100vw] rounded-b-2xl mt-4 bg-white border-t border-gray-100 shadow-xl/20 z-50
+                    id="mobile-menu"
+                    className={`md:hidden fixed w-[100vw] rounded-b-2xl mt-4 glass border-t border-gray-100 shadow-xl/20 z-50
                         transition-transform duration-500 ease-in-out
                         ${isMenuOpen ? "translate-y-0 opacity-100 pointer-events-auto" : "-translate-y-10 opacity-0 pointer-events-none"}`}
                     style={{ willChange: "transform, opacity" }}
                 >
                     <ul className="flex flex-col space-y-4 py-4">
+
                         {navbarItems.map((item) => {
+                            const isActive = pathname === item.path;
                             return (
                                 <li key={item.path}>
                                     <Link
                                         href={item.path}
-                                        className="relative text-gray-700 px-4 py-2 flex justify-center transition-colors duration-300 hover:text-blue-500
-                                            after:absolute after:left-1/2 after:-translate-x-1/2 after:bottom-1 after:w-0 after:h-[2px] after:bg-blue-500 after:rounded-full
-                                            after:transition-all after:duration-300 hover:after:w-3/4"
+                                        aria-current={isActive ? 'page' : undefined}
+                                        className={`relative px-4 py-2 flex justify-center transition-colors duration-300
+                                            ${isActive ? 'text-indigo-700' : 'text-gray-700 hover:text-indigo-600'}
+                                            after:absolute after:left-1/2 after:-translate-x-1/2 after:bottom-1 after:w-0 after:h-[2px] after:bg-indigo-600 after:rounded-full
+                                            after:transition-all after:duration-300 hover:after:w-3/4`}
                                         style={{ display: "inline-block" }}
                                         onClick={() => setIsMenuOpen(false)}
                                     >
@@ -132,7 +142,9 @@ export default function Navbar() {
 
 
             </div>
-            <Modes />
+            {['/speak', '/listen', '/write', '/question', '/answer', '/transcribe', '/review'].includes(pathname) && <Modes />}
+            <TokenModes />
+            <TranslateModes />
         </nav>
     )
 }

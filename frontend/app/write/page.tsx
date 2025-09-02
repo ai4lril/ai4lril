@@ -1,6 +1,9 @@
 "use client";
 
 import { useState } from "react";
+import { useEffect } from "react";
+import { codeToLabel } from "@/lib/languages";
+import { getPreferredLanguage } from "@/lib/langPreference";
 
 export default function AddSentence() {
     const [sentence, setSentence] = useState("");
@@ -8,6 +11,18 @@ export default function AddSentence() {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [submitted, setSubmitted] = useState(false);
     const [confirmed, setConfirmed] = useState(false);
+    const [lang, setLang] = useState<string | null>(null);
+
+    useEffect(() => {
+        const saved = getPreferredLanguage();
+        setLang(saved);
+        function onLangChanged(e: Event) {
+            const code = (e as CustomEvent<string>).detail;
+            setLang(code);
+        }
+        window.addEventListener('language-changed', onLangChanged as EventListener);
+        return () => window.removeEventListener('language-changed', onLangChanged as EventListener);
+    }, []);
 
     const isFormValid = sentence.trim() !== "" && citation.trim() !== "" && confirmed;
 
@@ -32,6 +47,9 @@ export default function AddSentence() {
                 Add a public domain sentence
                 <svg className="w-5 h-5 inline-block" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 20h9" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16.5 3.5a2.121 2.121 0 113 3L7 19.5 3 21l1.5-4L16.5 3.5z" /></svg>
             </h1>
+            <div className="text-center mb-3">
+                <span className="inline-block text-xs px-2 py-1 rounded-full bg-indigo-50 text-indigo-700 border border-indigo-200">{codeToLabel(lang)}</span>
+            </div>
             <p className="text-center text-gray-600 mb-6 text-sm md:text-base italic">
                 Your sentence will help build a free, open dataset for everyone. Thank you for contributing!
             </p>

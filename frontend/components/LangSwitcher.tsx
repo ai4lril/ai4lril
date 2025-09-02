@@ -1,28 +1,58 @@
 "use client";
-import { useState } from "react";
-
-interface Language {
-    name: string;
-    code: string;
-}
-
-const languages: Language[] = [
-    { name: "English", code: "eng" },
-    { name: "Hindi", code: "hin" },
-    { name: "Marathi", code: "mar" },
-    { name: "Konkani - Devnagri", code: "kok-d" },
-    { name: "Konkani - Roman", code: "kok-r" },
-];
+import { useEffect, useRef, useState } from "react";
+import { LANGUAGES, type Language } from "@/lib/languages";
+import { getPreferredLanguage, setPreferredLanguage } from "@/lib/langPreference";
 
 export default function LangSwitcher() {
-    const [selectedLanguage, setSelectedLanguage] = useState<Language>(languages[0]);
+    const [selectedLanguage, setSelectedLanguage] = useState<Language>(LANGUAGES[0]);
     const [isOpen, setIsOpen] = useState<boolean>(false);
+    const wrapperRef = useRef<HTMLDivElement | null>(null);
+    const listRef = useRef<HTMLUListElement | null>(null);
+
+    // Initialize from localStorage if available
+    useEffect(() => {
+        const saved = getPreferredLanguage();
+        if (saved) {
+            const found = LANGUAGES.find(l => l.code === saved);
+            if (found) setSelectedLanguage(found);
+        }
+    }, []);
+
+    // Outside click close (pointerdown for better mobile/safari support)
+    useEffect(() => {
+        function onDocClick(e: Event) {
+            if (!wrapperRef.current) return;
+            if (!wrapperRef.current.contains(e.target as Node)) setIsOpen(false);
+        }
+        document.addEventListener('pointerdown', onDocClick as EventListener);
+        return () => document.removeEventListener('pointerdown', onDocClick as EventListener);
+    }, []);
+
+    // Focus first option when menu opens
+    useEffect(() => {
+        if (isOpen && listRef.current) {
+            const first = listRef.current.querySelector('button');
+            (first as HTMLButtonElement | null)?.focus();
+        }
+    }, [isOpen]);
+
+    const choose = (lang: Language) => {
+        setSelectedLanguage(lang);
+        setIsOpen(false);
+        try {
+            setPreferredLanguage(lang.code);
+            window.dispatchEvent(new CustomEvent('language-changed', { detail: lang.code }));
+        } catch { }
+    };
 
     return (
-        <div className="relative inline-block text-left">
+        <div ref={wrapperRef} className="relative inline-block text-left z-[100]">
             <button
                 className="flex items-center justify-between gap-2 border border-gray-300 rounded-md px-3 py-1.5 text-sm bg-white hover:shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
                 onClick={() => setIsOpen(!isOpen)}
+                aria-haspopup="listbox"
+                aria-expanded={isOpen}
+                aria-controls="langswitcher-list"
             >
                 <span className="capitalize font-medium">{selectedLanguage.name}</span>
                 <svg
@@ -37,17 +67,24 @@ export default function LangSwitcher() {
             </button>
 
             {isOpen && (
-                <div className="absolute z-10 mt-2 w-44 bg-white border border-gray-200 rounded-md shadow-lg">
-                    <ul className="py-1">
-                        {languages.map((lang) => (
+                <div className="absolute z-[100] mt-2 w-52 bg-white border border-gray-200 rounded-md shadow-lg right-0">
+                    <ul
+                        ref={listRef}
+                        className="py-1"
+                        role="listbox"
+                        aria-label="Select language"
+                        id="langswitcher-list"
+                        onKeyDown={(e) => {
+                            if (e.key === 'Escape') setIsOpen(false);
+                        }}
+                    >
+                        {LANGUAGES.map((lang) => (
                             <li key={lang.code}>
                                 <button
-                                    className={`w-full text-left px-4 py-2 text-sm hover:bg-blue-100 transition ${selectedLanguage.code === lang.code ? "bg-blue-50 font-semibold" : ""
-                                        }`}
-                                    onClick={() => {
-                                        setSelectedLanguage(lang);
-                                        setIsOpen(false);
-                                    }}
+                                    className={`w-full text-left px-4 py-2 text-sm hover:bg-blue-100 focus:bg-blue-50 focus:outline-none transition ${selectedLanguage.code === lang.code ? "bg-blue-50 font-semibold" : ""}`}
+                                    onClick={() => choose(lang)}
+                                    role="option"
+                                    aria-selected={selectedLanguage.code === lang.code}
                                 >
                                     {lang.name}
                                 </button>

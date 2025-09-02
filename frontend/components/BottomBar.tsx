@@ -42,7 +42,7 @@ export default function BottomBar({ audioSrc, onSkip, onSubmit, disabled = false
                 <div className="bg-white/80 shadow flex items-center justify-center space-x-3 px-1 sm:px-7 md:px-10 w-full sm:w-auto py-3 rounded-full">
                     <button
                         onClick={handlePlayPause}
-                        className="text-blue-600 hover:text-indigo-700 focus:outline-none"
+                        className="text-blue-600 hover:text-blue-700 focus:outline-none"
                     >
                         {isPlaying ? (
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
@@ -74,10 +74,10 @@ export default function BottomBar({ audioSrc, onSkip, onSubmit, disabled = false
                 <button
                     onClick={onSubmit}
                     disabled={disabled || !audioSrc}
-                    className={`bg-gradient-to-r from-blue-500 to-indigo-500 w-[40vw] sm:w-auto min-w-[110px] px-4 py-2 sm:py-3 rounded-full transition-all flex items-center justify-center text-white font-semibold shadow
+                    className={`w-[40vw] sm:w-auto min-w-[110px] px-4 py-2 sm:py-3 rounded-full transition-all flex items-center justify-center text-white font-semibold shadow
                         ${audioSrc
-                            ? 'hover:from-blue-600 hover:to-indigo-600 focus:outline-none focus:ring-2 focus:ring-blue-300'
-                            : 'opacity-60 cursor-not-allowed'
+                            ? 'bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-slate-300'
+                            : 'bg-slate-400 opacity-60 cursor-not-allowed'
                         }`}
                 >
                     Submit
