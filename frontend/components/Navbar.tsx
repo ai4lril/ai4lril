@@ -142,7 +142,7 @@ export default function Navbar() {
 
 
             </div>
-            {['/speak', '/listen', '/write', '/question', '/answer', '/transcribe', '/review'].includes(pathname) && <Modes />}
+            <Modes />
             <TokenModes />
             <TranslateModes />
         </nav>

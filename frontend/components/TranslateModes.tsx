@@ -12,7 +12,9 @@ export default function TranslateModes() {
         { name: 'Translate', href: '/translate' },
         { name: 'Translation Review', href: '/translate-review' },
     ];
-    const isTranslatePath = modes.some(m => pathname === m.href);
+    const normalize = (s: string | null) => (s ?? '').replace(/\/+$/, '');
+    const p = normalize(pathname);
+    const isTranslatePath = modes.some(m => p.endsWith(m.href));
     const [source, setSource] = useState<string | null>(null);
     const [target, setTarget] = useState<string | null>(null);
 

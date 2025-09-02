@@ -8,8 +8,10 @@ export default function Modes() {
     const scripted = ['speak', 'listen', 'write'];
     const spontaneous = ['question', 'answer', 'transcribe', 'review'];
 
-    const isScripted = scripted.some(path => pathname === `/${path}`);
-    const isSpontaneous = spontaneous.some(path => pathname === `/${path}`);
+    const normalize = (s: string | null) => (s ?? '').replace(/\/+$/, '');
+    const p = normalize(pathname);
+    const isScripted = scripted.some(path => p.endsWith(`/${path}`));
+    const isSpontaneous = spontaneous.some(path => p.endsWith(`/${path}`));
     if (!isScripted && !isSpontaneous) return null;
 
     const arr = isScripted ? scripted : spontaneous;

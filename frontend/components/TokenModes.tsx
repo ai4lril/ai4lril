@@ -9,7 +9,9 @@ export default function TokenModes() {
         { name: 'Named Entity Recognition (NER)', href: '/ner' },
         { name: 'Part-of-Speech Tagging (POS)', href: '/pos' },
     ];
-    const isTokenPath = modes.some(m => pathname === m.href);
+    const normalize = (s: string | null) => (s ?? '').replace(/\/+$/, '');
+    const p = normalize(pathname);
+    const isTokenPath = modes.some(m => p.endsWith(m.href));
     if (!isTokenPath) return null;
 
     return (
