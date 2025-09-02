@@ -15,7 +15,6 @@ export const LANGUAGES: Language[] = [
     { code: "hin_latn", name: "Hindi - Roman" },
     { code: "hin_deva", name: "Hindi - Devnagri" },
     { code: "eng_latn", name: "English" },
-    { code: "kan_knda", name: "Kannada" },
 ];
 
 export function codeToLabel(code: string | null): string {
