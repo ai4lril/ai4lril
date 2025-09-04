@@ -9,7 +9,7 @@ export interface Contributor {
 export const contributors: Contributor[] = [
     {
         name: "Alvyn Abranches",
-        role: "Assistant Professor",
+        role: "Assistant Professor, PhD Scholar",
         interests: [
             "Computational Socio-Linguistics",
             "Low-Resourced Languages",

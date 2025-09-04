@@ -1,10 +1,20 @@
 export default function PrivacyPage() {
     return (
-        <div className="container mx-auto py-12 px-4 max-w-3xl">
-            <h1 className="text-3xl font-bold text-slate-800">Privacy Policy</h1>
-            <p className="mt-2 text-slate-600">Last updated: {new Date().toLocaleDateString()}</p>
+        <div className="container mx-auto py-12 px-4 max-w-3xl animate-fade-in-up">
+            <div className="glass rounded-2xl p-6 md:p-8 border border-slate-100 animate-bounce-in">
+                <div className="flex items-center gap-4 mb-6">
+                    <div className="p-3 rounded-full bg-gradient-to-br from-blue-100 to-indigo-100 animate-pulse">
+                        <svg className="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                        </svg>
+                    </div>
+                    <div>
+                        <h1 className="text-3xl font-bold text-slate-800">Privacy Policy</h1>
+                        <p className="mt-1 text-slate-600">Last updated: {new Date().toLocaleDateString()}</p>
+                    </div>
+                </div>
 
-            <section className="mt-8 space-y-4 text-slate-700 leading-relaxed">
+                <section className="mt-8 space-y-4 text-slate-700 leading-relaxed">
                 <p>
                     This Privacy Policy explains how we collect, use, store, and share information when you contribute
                     language data on this website. Our goal is to support research and development for Indian
@@ -12,8 +22,16 @@ export default function PrivacyPage() {
                 </p>
             </section>
 
-            <section className="mt-10">
-                <h2 className="text-xl font-semibold text-slate-800">What we collect</h2>
+            <section className="mt-10 animate-fade-in-up animate-delay-200">
+                <h2 className="text-xl font-semibold text-slate-800 flex items-center gap-3">
+                    <div className="p-2 rounded-full bg-indigo-100">
+                        <svg className="w-5 h-5 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                        </svg>
+                    </div>
+                    What we collect
+                </h2>
+                <div className="mt-3 h-1 w-20 bg-gradient-to-r from-indigo-400 to-indigo-600 rounded-full"></div>
                 <ul className="mt-3 list-disc ml-6 space-y-2 text-slate-700">
                     <li>
                         <span className="font-medium">Voice data (optional).</span> Audio recordings you submit during tasks like
@@ -34,8 +52,16 @@ export default function PrivacyPage() {
                 </ul>
             </section>
 
-            <section className="mt-10">
-                <h2 className="text-xl font-semibold text-slate-800">How we use the data</h2>
+            <section className="mt-10 animate-fade-in-up animate-delay-300">
+                <h2 className="text-xl font-semibold text-slate-800 flex items-center gap-3">
+                    <div className="p-2 rounded-full bg-emerald-100">
+                        <svg className="w-5 h-5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                        </svg>
+                    </div>
+                    How we use the data
+                </h2>
+                <div className="mt-3 h-1 w-20 bg-gradient-to-r from-emerald-400 to-teal-500 rounded-full"></div>
                 <ul className="mt-3 list-disc ml-6 space-y-2 text-slate-700">
                     <li>Build and evaluate open, research-grade datasets for Indian languages and scripts.</li>
                     <li>Develop, test, and improve language technologies (e.g., ASR, POS, NER, transcription tools).</li>
@@ -155,6 +181,7 @@ export default function PrivacyPage() {
                     maintainers. We aim to respond within a reasonable timeframe.
                 </p>
             </section>
+            </div>
         </div>
     );
 }

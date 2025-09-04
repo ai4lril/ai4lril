@@ -88,13 +88,13 @@ export default function NerPage() {
     };
 
     return (
-        <div className="w-full max-w-2xl md:max-w-4xl py-4 px-2 md:px-4 mx-auto">
-            <h1 className="text-xl md:text-2xl font-bold text-center mb-1">Named Entity Recognition</h1>
+        <div className="w-full max-w-2xl md:max-w-4xl py-4 px-2 md:px-4 mx-auto animate-fade-in-up">
+            <h1 className="text-xl md:text-2xl font-bold text-center mb-1 animate-bounce-in">Named Entity Recognition</h1>
             <div className="text-center mb-3">
-                <span className="inline-block text-xs px-2 py-1 rounded-full bg-indigo-50 text-indigo-700 border border-indigo-200">{codeToLabel(lang)}</span>
+                <span className="inline-block text-xs px-3 py-2 rounded-full bg-indigo-50 text-indigo-700 border border-indigo-200 font-medium animate-bounce-in">{codeToLabel(lang)}</span>
             </div>
 
-            <p className="text-center text-gray-600 mb-4 text-sm md:text-base">
+            <p className="text-center text-gray-600 mb-4 text-sm md:text-base animate-fade-in-up animate-delay-200">
                 Label the given sentence token-by-token with BIO tags. Use entity types like PER, LOC, ORG, DATE, TIME, MISC.
             </p>
 
@@ -107,7 +107,7 @@ export default function NerPage() {
 
                 <div className="grid grid-cols-1 md:grid-cols-[2fr_1fr] gap-4 w-full">
                     {/* Sentence + tagging */}
-                    <div className="bg-white/95 backdrop-blur-sm rounded-md md:rounded-lg p-4 shadow-md border border-gray-100 relative overflow-hidden flex flex-col">
+                    <div className="glass rounded-md md:rounded-lg p-4 shadow-md border border-gray-100 relative overflow-hidden flex flex-col">
                         <div className="absolute -right-8 -top-8 w-20 h-20 bg-indigo-100/50 rounded-full opacity-70 hidden sm:block"></div>
                         <div className="absolute -left-6 -bottom-6 w-16 h-16 bg-blue-100/50 rounded-full opacity-70 hidden sm:block"></div>
 
@@ -159,15 +159,25 @@ export default function NerPage() {
                                 </div>
 
                                 <div className="mt-4 flex gap-3 justify-center">
-                                    <button type="submit" className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white rounded-md px-5 py-2 font-semibold shadow-sm">Submit & Next</button>
-                                    <button type="button" onClick={nextSentence} className="border border-slate-300 hover:bg-blue-50 rounded-md px-5 py-2 font-semibold text-slate-700">Next sentence</button>
+                                    <button type="submit" className="group bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white rounded-lg px-6 py-3 font-semibold shadow-lg hover:shadow-xl border-2 border-blue-400 hover:border-blue-500 transition-all duration-300 hover:scale-105 active:scale-95 flex items-center gap-2">
+                                        <span>Submit & Next</span>
+                                        <svg className="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                                        </svg>
+                                    </button>
+                                    <button type="button" onClick={nextSentence} className="group bg-white/95 hover:bg-white shadow-lg hover:shadow-xl rounded-lg px-6 py-3 font-semibold text-slate-700 border border-gray-200 hover:border-gray-300 transition-all duration-300 hover:scale-105 active:scale-95 flex items-center gap-2">
+                                        <span>Next sentence</span>
+                                        <svg className="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                                        </svg>
+                                    </button>
                                 </div>
                             </form>
                         )}
                     </div>
 
                     {/* Guidelines */}
-                    <div className="bg-white/95 backdrop-blur-sm rounded-md md:rounded-lg p-4 shadow-md border border-gray-100 relative overflow-hidden mt-4 md:mt-0 flex flex-col">
+                    <div className="glass rounded-md md:rounded-lg p-4 shadow-md border border-gray-100 relative overflow-hidden mt-4 md:mt-0 flex flex-col">
                         <div className="absolute -right-6 -top-6 w-16 h-16 bg-amber-100/50 rounded-full opacity-70 hidden sm:block"></div>
 
                         <h2 className="text-md md:text-lg font-semibold mb-3 text-gray-800 relative">

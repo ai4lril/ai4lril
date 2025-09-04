@@ -3,7 +3,6 @@
 import { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import { codeToLabel } from '@/lib/languages';
-import { getPreferredTargetLanguage } from '@/lib/langPreference';
 import SubNavbar from '@/components/SubNavbar';
 
 export default function TranslateModes() {
@@ -16,34 +15,40 @@ export default function TranslateModes() {
     const p = normalize(pathname);
     const isTranslatePath = modes.some(m => p.endsWith(m.href));
     const [source, setSource] = useState<string | null>(null);
-    const [target, setTarget] = useState<string | null>(null);
 
     useEffect(() => {
         if (!isTranslatePath) return;
         try {
             const savedLang = window.localStorage.getItem('lang');
-            const savedTarget = getPreferredTargetLanguage();
             setSource(savedLang);
-            setTarget(savedTarget);
-        } catch {}
+        } catch { }
 
-        const onLang = (e: Event) => setSource((e as CustomEvent<string>).detail);
-        const onTarget = (e: Event) => setTarget((e as CustomEvent<string>).detail);
+        const onLang = (e: Event) => {
+            const code = (e as CustomEvent<string>).detail;
+            setSource(code);
+        };
         window.addEventListener('language-changed', onLang as EventListener);
-        window.addEventListener('translate-target-changed', onTarget as EventListener);
         return () => {
             window.removeEventListener('language-changed', onLang as EventListener);
-            window.removeEventListener('translate-target-changed', onTarget as EventListener);
         };
     }, [isTranslatePath]);
 
     return (
         <SubNavbar
             modes={modes}
-            rightSlot={<>
-                {source && <span suppressHydrationWarning className="inline-block text-[11px] px-2 py-0.5 rounded-full bg-indigo-50 text-indigo-700 border border-indigo-200">Source: {codeToLabel(source)}</span>}
-                {target && <span suppressHydrationWarning className="inline-block text-[11px] px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200">Target: {codeToLabel(target)}</span>}
-            </>}
+            rightSlot={
+                <div className="flex items-center gap-3">
+                    {/* Source Language Badge */}
+                    {source && (
+                        <span suppressHydrationWarning className="inline-block text-[11px] px-2 py-1 rounded-full bg-indigo-50 text-indigo-700 border border-indigo-200 font-medium">
+                            <svg className="w-3 h-3 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064" />
+                            </svg>
+                            {codeToLabel(source)}
+                        </span>
+                    )}
+                </div>
+            }
         />
     );
 }

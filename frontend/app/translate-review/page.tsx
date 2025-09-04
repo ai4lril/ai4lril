@@ -2,27 +2,68 @@
 
 import { useEffect, useState } from "react";
 import { reviewItems } from "@/app/translate/data";
-import { codeToLabel } from "@/lib/languages";
-import { getPreferredLanguage } from "@/lib/langPreference";
+import { codeToLabel, LANGUAGES } from "@/lib/languages";
+import { getPreferredLanguage, getPreferredTargetLanguage, setPreferredTargetLanguage } from "@/lib/langPreference";
 
 export default function TranslateReviewPage() {
     const [lang, setLang] = useState<string | null>(null);
+    const [target, setTarget] = useState<string>(""); // Start empty to avoid validation issues
     const [index, setIndex] = useState(0);
 
     useEffect(() => {
         const saved = getPreferredLanguage();
         setLang(saved);
+        const savedTarget = getPreferredTargetLanguage();
+        if (savedTarget) {
+            setTarget(savedTarget);
+        } else {
+            // Set default if no saved preference exists
+            const defaultTarget = "hin_deva";
+            setTarget(defaultTarget);
+            setPreferredTargetLanguage(defaultTarget);
+        }
         function onLangChanged(e: Event) {
             const code = (e as CustomEvent<string>).detail;
             setLang(code);
         }
+
+        function onTargetChanged(e: Event) {
+            const code = (e as CustomEvent<string>).detail;
+            setTarget(code);
+        }
+
         window.addEventListener('language-changed', onLangChanged as EventListener);
-        return () => window.removeEventListener('language-changed', onLangChanged as EventListener);
+        window.addEventListener('translate-target-changed', onTargetChanged as EventListener);
+        return () => {
+            window.removeEventListener('language-changed', onLangChanged as EventListener);
+            window.removeEventListener('translate-target-changed', onTargetChanged as EventListener);
+        };
     }, []);
 
-    const current = reviewItems[index];
 
-    const nextItem = () => setIndex((prev) => (prev + 1) % reviewItems.length);
+
+    // Filter review items based on target language if selected
+    const filteredReviewItems = target
+        ? reviewItems.filter(item => item.targetLang === target)
+        : reviewItems;
+
+    // If no items match the selected target language, show all items as fallback
+    const finalFilteredItems = filteredReviewItems.length > 0 ? filteredReviewItems : reviewItems;
+
+    // Reset index if it goes out of bounds after filtering
+    useEffect(() => {
+        if (index >= finalFilteredItems.length) {
+            setIndex(0);
+        }
+    }, [index, finalFilteredItems.length]);
+
+    const current = finalFilteredItems[index] || reviewItems[0];
+
+    const nextItem = () => setIndex((prev) => (prev + 1) % finalFilteredItems.length);
+
+    // Get all available languages except the current source language
+    const targetOptions = LANGUAGES.filter(language => language.code !== current?.sourceLang);
+
 
     const vote = (isCorrect: boolean) => {
         console.log("Translate review", { id: current.id, correct: isCorrect });
@@ -30,10 +71,65 @@ export default function TranslateReviewPage() {
     };
 
     return (
-        <div className="w-full max-w-2xl md:max-w-4xl py-4 px-2 md:px-4 mx-auto">
-            <h1 className="text-xl md:text-2xl font-bold text-center mb-1">Translation Review</h1>
-            <div className="text-center mb-3">
-                <span suppressHydrationWarning className="inline-block text-xs px-2 py-1 rounded-full bg-indigo-50 text-indigo-700 border border-indigo-200">{codeToLabel(lang)}</span>
+        <div className="w-full max-w-2xl md:max-w-4xl py-4 px-2 md:px-4 mx-auto animate-fade-in-up">
+            <h1 className="text-xl md:text-2xl font-bold text-center mb-1 animate-bounce-in">Translation Review</h1>
+            <div className="text-center mb-6 space-y-3">
+                <div>
+                    <span suppressHydrationWarning className="inline-block text-xs px-3 py-2 rounded-full bg-indigo-50 text-indigo-700 border border-indigo-200 font-medium animate-bounce-in">{codeToLabel(lang)}</span>
+                </div>
+
+                                    {/* Target Language Selection */}
+                <div className="space-y-2 max-w-xs mx-auto">
+                    {target && filteredReviewItems.length === 0 && (
+                        <div className="text-xs text-amber-600 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2 text-center">
+                            No items available for selected language. Showing all items.
+                        </div>
+                    )}
+                    <label className="text-sm font-semibold text-slate-800 flex items-center gap-2 justify-center">
+                        <svg className="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064" />
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        Target Language
+                        {!target && <span className="text-red-500 ml-1">*</span>}
+                    </label>
+
+                    <select
+                        value={target || ""}
+                        onChange={(e) => {
+                            const val = e.target.value;
+                            setTarget(val);
+                            setPreferredTargetLanguage(val);
+                        }}
+                        className={`w-full px-4 py-3 border-2 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400 transition-all duration-200 ${!target || target === current?.sourceLang
+                                ? 'border-red-300 bg-red-50'
+                                : 'border-gray-200 hover:border-gray-300'
+                            }`}
+                    >
+                        <option value="">Select target language...</option>
+                        {targetOptions.map((language) => (
+                            <option
+                                key={language.code}
+                                value={language.code}
+                                disabled={language.code === current?.sourceLang}
+                            >
+                                {language.name}
+                            </option>
+                        ))}
+                    </select>
+
+                    {/* Error message */}
+                    {(!target || target === current?.sourceLang) && (
+                        <p className="mt-1 text-sm text-red-600 flex items-center gap-1">
+                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z" />
+                            </svg>
+                            Please select a different target language
+                        </p>
+                    )}
+
+
+                </div>
             </div>
 
             <div className="w-full relative">
@@ -41,7 +137,7 @@ export default function TranslateReviewPage() {
 
                 <div className="grid grid-cols-1 md:grid-cols-[2fr_1fr] gap-4 w-full">
                     {/* Source + candidate card */}
-                    <div className="bg-white/95 backdrop-blur-sm rounded-md md:rounded-lg p-4 shadow-md border border-gray-100 relative overflow-hidden flex flex-col">
+                    <div className="glass rounded-md md:rounded-lg p-4 shadow-md border border-gray-100 relative overflow-hidden flex flex-col">
                         <div className="absolute -right-8 -top-8 w-20 h-20 bg-indigo-100/50 rounded-full opacity-70 hidden sm:block"></div>
                         <div className="absolute -left-6 -bottom-6 w-16 h-16 bg-blue-100/50 rounded-full opacity-70 hidden sm:block"></div>
 
@@ -68,14 +164,29 @@ export default function TranslateReviewPage() {
                         </div>
 
                         <div className="mt-4 flex gap-3 justify-center">
-                            <button onClick={() => vote(true)} className="bg-emerald-600 hover:bg-emerald-700 text-white rounded-md px-5 py-2 font-semibold shadow-sm">Correct</button>
-                            <button onClick={() => vote(false)} className="bg-red-600 hover:bg-red-700 text-white rounded-md px-5 py-2 font-semibold shadow-sm">Incorrect</button>
-                            <button onClick={nextItem} className="border border-slate-300 hover:bg-blue-50 rounded-md px-5 py-2 font-semibold text-slate-700">Skip</button>
+                            <button onClick={() => vote(true)} className="group bg-gradient-to-r from-emerald-500 to-green-600 hover:from-emerald-600 hover:to-green-700 text-white rounded-lg px-6 py-3 font-semibold shadow-lg hover:shadow-xl border-2 border-emerald-400 hover:border-emerald-500 transition-all duration-300 hover:scale-105 active:scale-95 flex items-center gap-2">
+                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                                <span>Correct</span>
+                            </button>
+                            <button onClick={() => vote(false)} className="group bg-gradient-to-r from-red-500 to-pink-600 hover:from-red-600 hover:to-pink-700 text-white rounded-lg px-6 py-3 font-semibold shadow-lg hover:shadow-xl border-2 border-red-400 hover:border-red-500 transition-all duration-300 hover:scale-105 active:scale-95 flex items-center gap-2">
+                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                                <span>Incorrect</span>
+                            </button>
+                            <button onClick={nextItem} className="group bg-white/95 hover:bg-white shadow-lg hover:shadow-xl rounded-lg px-6 py-3 font-semibold text-slate-700 border border-gray-200 hover:border-gray-300 transition-all duration-300 hover:scale-105 active:scale-95 flex items-center gap-2">
+                                <span>Skip</span>
+                                <svg className="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                                </svg>
+                            </button>
                         </div>
                     </div>
 
                     {/* Tips card */}
-                    <div className="bg-white/95 backdrop-blur-sm rounded-md md:rounded-lg p-4 shadow-md border border-gray-100 relative overflow-hidden mt-4 md:mt-0 flex flex-col">
+                    <div className="glass rounded-md md:rounded-lg p-4 shadow-md border border-gray-100 relative overflow-hidden mt-4 md:mt-0 flex flex-col">
                         <div className="absolute -right-6 -top-6 w-16 h-16 bg-amber-100/50 rounded-full opacity-70 hidden sm:block"></div>
 
                         <h2 className="text-md md:text-lg font-semibold mb-3 text-gray-800 relative">
@@ -96,5 +207,3 @@ export default function TranslateReviewPage() {
         </div>
     );
 }
-
-

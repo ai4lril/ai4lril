@@ -48,16 +48,24 @@ export default function LangSwitcher() {
     return (
         <div ref={wrapperRef} className="relative inline-block text-left z-[100]">
             <button
-                className="flex items-center justify-between gap-2 border border-gray-300 rounded-md px-3 py-1.5 text-sm bg-white hover:shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+                className="group flex items-center justify-between gap-3 border border-gray-300 rounded-lg px-4 py-2.5 text-sm bg-white/95 hover:bg-white hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300 hover:scale-105 backdrop-blur-sm"
                 onClick={() => setIsOpen(!isOpen)}
                 aria-haspopup="listbox"
                 aria-expanded={isOpen}
                 aria-controls="langswitcher-list"
             >
-                <span className="capitalize font-medium">{selectedLanguage.name}</span>
+                <div className="flex items-center gap-2">
+                    <div className={`w-3 h-3 rounded-full transition-colors duration-300 ${
+                        selectedLanguage.code === 'hi' ? 'bg-orange-400' :
+                        selectedLanguage.code === 'mr' ? 'bg-blue-400' :
+                        selectedLanguage.code === 'kok' ? 'bg-green-400' :
+                        selectedLanguage.code === 'en' ? 'bg-purple-400' : 'bg-gray-400'
+                    }`}></div>
+                    <span className="capitalize font-medium text-gray-800">{selectedLanguage.name}</span>
+                </div>
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    className={`h-4 w-4 transform transition-transform ${isOpen ? "rotate-180" : "rotate-0"}`}
+                    className={`h-4 w-4 transform transition-all duration-300 ${isOpen ? "rotate-180 text-blue-600" : "rotate-0 text-gray-500"}`}
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -67,7 +75,10 @@ export default function LangSwitcher() {
             </button>
 
             {isOpen && (
-                <div className="absolute z-[100] mt-2 w-52 bg-white border border-gray-200 rounded-md shadow-lg right-0">
+                <div className="absolute z-[100] mt-2 w-56 bg-white/95 backdrop-blur-sm border border-gray-200 rounded-xl shadow-2xl right-0 animate-in slide-in-from-top-2 duration-200">
+                    <div className="p-2">
+                        <div className="text-xs font-semibold text-gray-500 uppercase tracking-wide px-2 py-1">Select Language</div>
+                    </div>
                     <ul
                         ref={listRef}
                         className="py-1"
@@ -81,12 +92,27 @@ export default function LangSwitcher() {
                         {LANGUAGES.map((lang) => (
                             <li key={lang.code}>
                                 <button
-                                    className={`w-full text-left px-4 py-2 text-sm hover:bg-blue-100 focus:bg-blue-50 focus:outline-none transition ${selectedLanguage.code === lang.code ? "bg-blue-50 font-semibold" : ""}`}
+                                    className={`group w-full text-left px-4 py-3 text-sm hover:bg-blue-50 focus:bg-blue-50 focus:outline-none transition-all duration-200 flex items-center gap-3 ${
+                                        selectedLanguage.code === lang.code
+                                            ? "bg-blue-100 font-semibold text-blue-900 border-l-4 border-blue-500"
+                                            : "text-gray-700 hover:text-blue-900"
+                                    }`}
                                     onClick={() => choose(lang)}
                                     role="option"
                                     aria-selected={selectedLanguage.code === lang.code}
                                 >
-                                    {lang.name}
+                                    <div className={`w-3 h-3 rounded-full transition-colors duration-300 ${
+                                        lang.code === 'hi' ? 'bg-orange-400' :
+                                        lang.code === 'mr' ? 'bg-blue-400' :
+                                        lang.code === 'kok' ? 'bg-green-400' :
+                                        lang.code === 'en' ? 'bg-purple-400' : 'bg-gray-400'
+                                    }`}></div>
+                                    <span className="flex-1">{lang.name}</span>
+                                    {selectedLanguage.code === lang.code && (
+                                        <svg className="w-4 h-4 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                                            <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                                        </svg>
+                                    )}
                                 </button>
                             </li>
                         ))}

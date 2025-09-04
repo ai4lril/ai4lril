@@ -1,10 +1,20 @@
 export default function TermsPage() {
     return (
-        <div className="container mx-auto py-12 px-4 max-w-3xl">
-            <h1 className="text-3xl font-bold text-slate-800">Terms of Service</h1>
-            <p className="mt-2 text-slate-600">Last updated: {new Date().toLocaleDateString()}</p>
+        <div className="container mx-auto py-12 px-4 max-w-3xl animate-fade-in-up">
+            <div className="glass rounded-2xl p-6 md:p-8 border border-slate-100 animate-bounce-in">
+                <div className="flex items-center gap-4 mb-6">
+                    <div className="p-3 rounded-full bg-gradient-to-br from-purple-100 to-pink-100 animate-pulse">
+                        <svg className="w-8 h-8 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                        </svg>
+                    </div>
+                    <div>
+                        <h1 className="text-3xl font-bold text-slate-800">Terms of Service</h1>
+                        <p className="mt-1 text-slate-600">Last updated: {new Date().toLocaleDateString()}</p>
+                    </div>
+                </div>
 
-            <section className="mt-8 space-y-4 text-slate-700 leading-relaxed">
+                <section className="mt-8 space-y-4 text-slate-700 leading-relaxed">
                 <p>
                     These Terms of Service (&quot;Terms&quot;) govern your access to and use of this website and related
                     services (the &quot;Service&quot;) for contributing and reviewing language data, including but not limited to
@@ -12,16 +22,28 @@ export default function TermsPage() {
                 </p>
             </section>
 
-            <section className="mt-10">
-                <h2 className="text-xl font-semibold text-slate-800">1. Eligibility & Accounts</h2>
+            <section className="mt-10 animate-fade-in-up animate-delay-200">
+                <h2 className="text-xl font-semibold text-slate-800 flex items-center gap-3">
+                    <div className="p-2 rounded-full bg-blue-100">
+                        <span className="text-sm font-bold text-blue-600">1</span>
+                    </div>
+                    Eligibility & Accounts
+                </h2>
+                <div className="mt-3 h-1 w-20 bg-gradient-to-r from-blue-400 to-indigo-500 rounded-full"></div>
                 <ul className="mt-3 list-disc ml-6 space-y-2 text-slate-700">
                     <li>You must be able to form a binding contract in your jurisdiction to use the Service.</li>
                     <li>You are responsible for maintaining the confidentiality of any credentials you use.</li>
                 </ul>
             </section>
 
-            <section className="mt-10">
-                <h2 className="text-xl font-semibold text-slate-800">2. Contributions</h2>
+            <section className="mt-10 animate-fade-in-up animate-delay-300">
+                <h2 className="text-xl font-semibold text-slate-800 flex items-center gap-3">
+                    <div className="p-2 rounded-full bg-emerald-100">
+                        <span className="text-sm font-bold text-emerald-600">2</span>
+                    </div>
+                    Contributions
+                </h2>
+                <div className="mt-3 h-1 w-20 bg-gradient-to-r from-emerald-400 to-teal-500 rounded-full"></div>
                 <p className="mt-3 text-slate-700">
                     You may submit voice recordings, text, and annotations (collectively, &quot;Contributions&quot;). You represent
                     and warrant that you have the necessary rights to provide your Contributions and that they do not
@@ -141,6 +163,7 @@ export default function TermsPage() {
                     For questions about these Terms, please reach out via the Contact page.
                 </p>
             </section>
+            </div>
         </div>
     );
 }

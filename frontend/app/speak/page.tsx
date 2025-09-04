@@ -80,22 +80,22 @@ export default function Speak() {
     }, [audioUrl]);
 
     return (
-        <div className="flex flex-col items-center w-full h-full justify-center gap">
-            <p className="mt-7 sm:mt-3 text-center">click <span className="inline-flex">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 text-blue-600">
+        <div className="flex flex-col items-center w-full h-full justify-center gap animate-fade-in-up">
+            <p className="mt-7 sm:mt-3 text-center animate-bounce-in">click <span className="inline-flex animate-pulse">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 text-blue-600 hover:scale-110 transition-transform duration-300">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M12 18.75a6 6 0 0 0 6-6v-1.5m-6 7.5a6 6 0 0 1-6-6v-1.5m6 7.5v3.75m-3.75 0h7.5M12 15.75a3 3 0 0 1-3-3V4.5a3 3 0 1 1 6 0v8.25a3 3 0 0 1-3 3Z" />
                 </svg>
             </span> then read the sentence aloud</p>
-            <div className="w-full card-wide mx-auto my-2 relative flex flex-col">
+            <div className="w-full card-wide mx-auto my-2 relative flex flex-col animate-slide-in-left">
                 <div className="text-center mb-2">
-                    <span className="inline-block text-xs px-2 py-1 rounded-full bg-indigo-50 text-indigo-700 border border-indigo-200">{codeToLabel(lang)}</span>
+                    <span className="inline-block text-xs px-3 py-2 rounded-full bg-indigo-50 text-indigo-700 border border-indigo-200 font-medium animate-bounce-in">{codeToLabel(lang)}</span>
                 </div>
                 <div className="w-full relative">
                 {/* Always show the gradient border, even if the card is short */}
                 <div className="absolute left-0 top-0 h-full w-[5px] sm:w-[6px] rounded-l-2xl bg-gradient-to-b from-blue-500 via-indigo-500 to-purple-500 shadow-lg z-10"></div>
                 <div className="flex-1 min-h-[40vh] max-h-fit sm:px-8 p-8 xs:px-4
                       flex flex-col items-center justify-around 
-                      bg-white rounded-r-2xl shadow-2xl relative z-20 border border-gray-100 ml-[5px] sm:ml-[5px]">
+                      glass rounded-r-2xl shadow-2xl relative z-20 border border-gray-100 ml-[5px] sm:ml-[5px]">
                     <DialogBox />
 
                     <RecordBtn onAudioRecorded={handleAudioRecorded} />

@@ -34,13 +34,13 @@ export default function Question() {
     };
 
     return (
-        <div className="w-full max-w-2xl md:max-w-4xl py-4 px-2 md:px-4 mx-auto">
-            <h1 className="text-xl md:text-2xl font-bold text-center mb-1">Add a Question</h1>
+        <div className="w-full max-w-2xl md:max-w-4xl py-4 px-2 md:px-4 mx-auto animate-fade-in-up">
+            <h1 className="text-xl md:text-2xl font-bold text-center mb-1 animate-bounce-in">Add a Question</h1>
             <div className="text-center mb-2">
-                <span className="inline-block text-xs px-2 py-1 rounded-full bg-indigo-50 text-indigo-700 border border-indigo-200">{codeToLabel(lang)}</span>
+                <span className="inline-block text-xs px-3 py-2 rounded-full bg-indigo-50 text-indigo-700 border border-indigo-200 font-medium animate-bounce-in">{codeToLabel(lang)}</span>
             </div>
 
-            <p className="text-center text-gray-600 mb-4 text-sm md:text-base">
+            <p className="text-center text-gray-600 mb-4 text-sm md:text-base animate-fade-in-up animate-delay-200">
                 Submit questions for others to answer. Good questions help us collect valuable voice data.
             </p>
 
@@ -49,7 +49,7 @@ export default function Question() {
 
                 <div className="grid grid-cols-1 md:grid-cols-[2fr_1fr] gap-4 w-full">
                     {/* Question input section */}
-                    <div className="bg-white/95 backdrop-blur-sm rounded-md md:rounded-lg p-4 shadow-md border border-gray-100 relative overflow-hidden flex flex-col">
+                    <div className="glass rounded-md md:rounded-lg p-4 shadow-md border border-gray-100 relative overflow-hidden flex flex-col">
                         {/* Decorative circles */}
                         <div className="absolute -right-8 -top-8 w-20 h-20 bg-indigo-100/50 rounded-full opacity-70 hidden sm:block"></div>
                         <div className="absolute -left-6 -bottom-6 w-16 h-16 bg-blue-100/50 rounded-full opacity-70 hidden sm:block"></div>
@@ -71,19 +71,43 @@ export default function Question() {
                         <button
                             onClick={() => document.forms[0].requestSubmit()}
                             disabled={isSubmitting || submitted}
-                            className={`w-full px-4 py-2 rounded-md font-medium transition-all duration-200 shadow-sm hover:shadow mt-2 ${isSubmitting
-                                ? "bg-blue-300 cursor-not-allowed"
-                                : submitted
-                                    ? "bg-green-500 text-white"
-                                    : "bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white"
+                            className={`group w-full px-6 py-4 rounded-lg font-semibold transition-all duration-300 shadow-lg hover:shadow-xl border-2 mt-4 ${isSubmitting
+                                    ? "bg-gray-100 border-gray-200 text-gray-400 cursor-not-allowed"
+                                    : submitted
+                                        ? "bg-gradient-to-r from-green-500 to-emerald-600 border-green-400 text-white"
+                                        : "bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 border-blue-400 text-white hover:scale-[1.02] active:scale-[0.98]"
                                 }`}
                         >
-                            {isSubmitting ? "Submitting..." : submitted ? "Submitted!" : "Submit Question"}
+                            <span className="flex items-center justify-center gap-3">
+                                {isSubmitting ? (
+                                    <>
+                                        <svg className="animate-spin w-5 h-5" fill="none" viewBox="0 0 24 24">
+                                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                        </svg>
+                                        Submitting...
+                                    </>
+                                ) : submitted ? (
+                                    <>
+                                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                        </svg>
+                                        Submitted Successfully!
+                                    </>
+                                ) : (
+                                    <>
+                                        <span>Submit Question</span>
+                                        <svg className="w-5 h-5 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                                        </svg>
+                                    </>
+                                )}
+                            </span>
                         </button>
                     </div>
 
                     {/* Guidelines section */}
-                    <div className="bg-white/95 backdrop-blur-sm rounded-md md:rounded-lg p-4 shadow-md border border-gray-100 relative overflow-hidden mt-4 md:mt-0 flex flex-col">
+                    <div className="glass rounded-md md:rounded-lg p-4 shadow-md border border-gray-100 relative overflow-hidden mt-4 md:mt-0 flex flex-col">
                         {/* Decorative circle */}
                         <div className="absolute -right-6 -top-6 w-16 h-16 bg-amber-100/50 rounded-full opacity-70 hidden sm:block"></div>
 

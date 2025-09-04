@@ -70,23 +70,23 @@ export default function Answer() {
     }, [audioUrl]);
 
     return (
-        <div className="flex flex-col items-center w-full h-full justify-center gap-2 px-4 sm:px-6 md:px-8">
-            <p className="mt-7 sm:mt-3 text-center font-medium tracking-wide">
-                <span className="inline-flex align-middle">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 text-blue-600">
+        <div className="flex flex-col items-center w-full h-full justify-center gap animate-fade-in-up px-4 sm:px-6 md:px-8">
+            <p className="mt-7 sm:mt-3 text-center font-medium tracking-wide animate-bounce-in">
+                <span className="inline-flex align-middle animate-pulse">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 text-blue-600 hover:scale-110 transition-transform duration-300">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M12 18.75a6 6 0 0 0 6-6v-1.5m-6 7.5a6 6 0 0 1-6-6v-1.5m6 7.5v3.75m-3.75 0h7.5M12 15.75a3 3 0 0 1-3-3V4.5a3 3 0 1 1 6 0v8.25a3 3 0 0 1-3 3Z" />
                     </svg>
                 </span>
                 Respond as naturally as you can
             </p>
-            <div className="w-full sm:max-w-[80%] mx-auto my-1 relative flex flex-col">
+            <div className="w-full sm:max-w-[80%] mx-auto my-1 relative flex flex-col animate-slide-in-left">
                 <div className="text-center mb-2">
-                    <span className="inline-block text-xs px-2 py-1 rounded-full bg-indigo-50 text-indigo-700 border border-indigo-200">{codeToLabel(lang)}</span>
+                    <span className="inline-block text-xs px-3 py-2 rounded-full bg-indigo-50 text-indigo-700 border border-indigo-200 font-medium animate-bounce-in">{codeToLabel(lang)}</span>
                 </div>
                 <div className="absolute inset-0 bg-gradient-to-b from-blue-50/30 to-indigo-50/30 -z-10 rounded-xl blur-xl hidden md:block"></div>
                 <div className="flex-1 min-h-[40vh] max-h-fit p-6 sm:p-8
                       flex flex-col items-center justify-around 
-                      bg-white/95 backdrop-blur-sm rounded-md md:rounded-lg shadow-md relative z-20 border border-gray-100">
+                      glass rounded-md md:rounded-lg shadow-md relative z-20 border border-gray-100">
                     <div className="absolute -right-8 -top-8 w-20 h-20 bg-indigo-100/50 rounded-full opacity-70 hidden sm:block"></div>
                     <div className="absolute -left-6 -bottom-6 w-16 h-16 bg-blue-100/50 rounded-full opacity-70 hidden sm:block"></div>
                     <div className="flex flex-col items-center">
