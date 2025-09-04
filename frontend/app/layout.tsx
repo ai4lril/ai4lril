@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { Noto_Sans } from 'next/font/google';
 import Navbar from "@/components/Navbar";
 import { StagewiseToolbar } from '@stagewise/toolbar-next';
@@ -47,10 +48,10 @@ export default function RootLayout({
                     <div className="container mx-auto px-4 py-6 text-sm text-slate-600 flex flex-col sm:flex-row items-center justify-between gap-3">
                         <div>© {new Date().getFullYear()} Language Data Collection</div>
                         <nav className="flex items-center gap-4">
-                            <a className="hover:text-blue-700" href="/about" aria-label="About">About</a>
-                            <a className="hover:text-blue-700" href="/contact" aria-label="Contact">Contact</a>
-                            <a className="hover:text-blue-700" href="/privacy" aria-label="Privacy">Privacy</a>
-                            <a className="hover:text-blue-700" href="/terms" aria-label="Terms">Terms</a>
+                            <Link className="hover:text-blue-700" href="/about" aria-label="About">About</Link>
+                            <Link className="hover:text-blue-700" href="/contact" aria-label="Contact">Contact</Link>
+                            <Link className="hover:text-blue-700" href="/privacy" aria-label="Privacy">Privacy</Link>
+                            <Link className="hover:text-blue-700" href="/terms" aria-label="Terms">Terms</Link>
                             <span className="inline-flex items-center gap-2 ml-2">
                                 <a href="#" aria-label="Twitter" className="hover:text-blue-700">
                                     <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M22.46 6c-.77.35-1.6.58-2.46.69a4.21 4.21 0 001.85-2.32 8.39 8.39 0 01-2.66 1.02 4.18 4.18 0 00-7.12 3.81A11.86 11.86 0 013 4.9a4.17 4.17 0 001.29 5.58 4.13 4.13 0 01-1.9-.52v.05a4.18 4.18 0 003.35 4.1 4.21 4.21 0 01-1.89.07 4.18 4.18 0 003.9 2.9A8.39 8.39 0 012 19.54a11.84 11.84 0 006.41 1.88c7.69 0 11.89-6.37 11.89-11.89l-.01-.54A8.5 8.5 0 0022.46 6z"/></svg>

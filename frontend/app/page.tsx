@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function Home() {
     return (
         <div className="w-full">
@@ -15,30 +17,30 @@ export default function Home() {
                         Help build open, research-grade datasets for diverse Indian languages and scripts. Contribute speech, validate recordings, and support revitalization.
                     </p>
                     <div className="mt-8 flex flex-wrap gap-3">
-                        <a href="/speak" className="group bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 focus:outline-none focus:ring-2 focus:ring-blue-300 text-white px-6 py-3 rounded-full font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 active:scale-95">
+                        <Link href="/speak" className="group bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 focus:outline-none focus:ring-2 focus:ring-blue-300 text-white px-6 py-3 rounded-full font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 active:scale-95">
                             <span className="flex items-center gap-2">
                                 Contribute
                                 <svg className="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                                 </svg>
                             </span>
-                        </a>
-                        <a href="/listen" className="group bg-white/90 hover:bg-white border border-slate-200 text-slate-700 hover:text-indigo-700 shadow-lg hover:shadow-xl transition-all duration-300 px-6 py-3 rounded-full hover:scale-105 active:scale-95">
+                        </Link>
+                        <Link href="/listen" className="group bg-white/90 hover:bg-white border border-slate-200 text-slate-700 hover:text-indigo-700 shadow-lg hover:shadow-xl transition-all duration-300 px-6 py-3 rounded-full hover:scale-105 active:scale-95">
                             <span className="flex items-center gap-2">
                                 Validate
                                 <svg className="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                                 </svg>
                             </span>
-                        </a>
-                        <a href="/languages" className="group bg-white/90 hover:bg-white border border-slate-200 text-slate-700 hover:text-indigo-700 shadow-lg hover:shadow-xl transition-all duration-300 px-6 py-3 rounded-full hover:scale-105 active:scale-95">
+                        </Link>
+                        <Link href="/languages" className="group bg-white/90 hover:bg-white border border-slate-200 text-slate-700 hover:text-indigo-700 shadow-lg hover:shadow-xl transition-all duration-300 px-6 py-3 rounded-full hover:scale-105 active:scale-95">
                             <span className="flex items-center gap-2">
                                 Browse languages
                                 <svg className="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9v-9m0-9v9" />
                                 </svg>
                             </span>
-                        </a>
+                        </Link>
                     </div>
                 </div>
                 <div className="relative">
@@ -112,7 +114,7 @@ export default function Home() {
                 <div className="mt-6 card rounded-2xl p-6">
                     <div className="flex items-start gap-4">
                         <div className="size-12 rounded-full bg-gradient-to-tr from-blue-200 to-indigo-200 border border-white" />
-                        <div>
+        <div>
                             <div className="flex flex-wrap items-center gap-2">
                                 <h3 className="text-lg font-semibold text-slate-800">Alvyn Abranches</h3>
                                 <span className="text-xs px-2 py-1 rounded-full bg-blue-50 text-blue-700 border border-blue-200">Assistant Professor</span>

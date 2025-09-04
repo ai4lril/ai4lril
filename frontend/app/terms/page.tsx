@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 export default function TermsPage() {
     return (
         <div className="container mx-auto py-12 px-4 max-w-3xl animate-fade-in-up">
@@ -71,7 +73,7 @@ export default function TermsPage() {
             <section className="mt-10">
                 <h2 className="text-xl font-semibold text-slate-800">4. Privacy</h2>
                 <p className="mt-3 text-slate-700">
-                    Our processing of data is described in the <a href="/privacy" className="text-indigo-700 underline">Privacy Policy</a>.
+                    Our processing of data is described in the <Link href="/privacy" className="text-indigo-700 underline">Privacy Policy</Link>.
                     By using the Service, you agree to that policy.
                 </p>
             </section>

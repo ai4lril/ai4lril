@@ -1,5 +1,6 @@
 import { contributors } from './contributors';
 import Image from 'next/image';
+import Link from 'next/link';
 
 export default function AboutPage() {
 
@@ -205,18 +206,18 @@ export default function AboutPage() {
                             <Image src="/vercel.svg" alt="Get involved illustration" width={64} height={64} />
                         </div>
                         <div className="mt-4 flex flex-wrap gap-3 animate-fade-in-up animate-delay-300">
-                            <a href="/contact" className="group inline-flex bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white text-sm font-semibold px-6 py-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 active:scale-95 items-center gap-2">
+                            <Link href="/contact" className="group inline-flex bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white text-sm font-semibold px-6 py-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 active:scale-95 items-center gap-2">
                                 <svg className="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                                 </svg>
                                 Contact us
-                            </a>
-                            <a href="/speak" className="group inline-flex bg-white/95 hover:bg-white border border-slate-300 hover:border-slate-400 text-slate-700 hover:text-slate-800 text-sm font-semibold px-6 py-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 active:scale-95 items-center gap-2">
+                            </Link>
+                            <Link href="/speak" className="group inline-flex bg-white/95 hover:bg-white border border-slate-300 hover:border-slate-400 text-slate-700 hover:text-slate-800 text-sm font-semibold px-6 py-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 active:scale-95 items-center gap-2">
                                 <svg className="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
                                 </svg>
                                 Start contributing
-                            </a>
+                            </Link>
                         </div>
                     </div>
                     <aside className="card rounded-2xl p-6">
@@ -364,7 +365,7 @@ export default function AboutPage() {
                             </div>
                             <h3 className="text-lg font-semibold text-slate-800 mb-2">Join Our Team</h3>
                             <p className="text-slate-600 text-sm mb-4">Interested in contributing to language preservation? We&apos;d love to hear from you.</p>
-                            <a
+                            <Link
                                 href="/contact"
                                 className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-xl font-medium shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
                             >
@@ -372,7 +373,7 @@ export default function AboutPage() {
                                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                                 </svg>
-                            </a>
+                            </Link>
                         </div>
                     </div>
                 </div>
@@ -420,7 +421,7 @@ export default function AboutPage() {
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                             </svg>
                         </summary>
-                        <p className="mt-4 text-sm text-slate-700 leading-relaxed pl-9">We avoid collecting directly identifying information. See our <a className="text-indigo-600 hover:underline font-medium" href="/privacy">Privacy Policy</a> for details.</p>
+                        <p className="mt-4 text-sm text-slate-700 leading-relaxed pl-9">We avoid collecting directly identifying information. See our <Link className="text-indigo-600 hover:underline font-medium" href="/privacy">Privacy Policy</Link> for details.</p>
                     </details>
                     <details className="group rounded-xl border border-slate-200 bg-white/90 hover:bg-white p-4 shadow-sm hover:shadow-md transition-all duration-300">
                         <summary className="cursor-pointer font-semibold text-slate-800 flex items-center justify-between hover:text-amber-900 transition-colors duration-300">
@@ -436,7 +437,7 @@ export default function AboutPage() {
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                             </svg>
                         </summary>
-                        <p className="mt-4 text-sm text-slate-700 leading-relaxed pl-9">Yes. Use the <a className="text-indigo-600 hover:underline font-medium" href="/contact">contact page</a> to propose new languages or scripts and we&apos;ll coordinate onboarding.</p>
+                        <p className="mt-4 text-sm text-slate-700 leading-relaxed pl-9">Yes. Use the <Link className="text-indigo-600 hover:underline font-medium" href="/contact">contact page</Link> to propose new languages or scripts and we&apos;ll coordinate onboarding.</p>
                     </details>
                     <details className="group rounded-xl border border-slate-200 bg-white/90 hover:bg-white p-4 shadow-sm hover:shadow-md transition-all duration-300">
                         <summary className="cursor-pointer font-semibold text-slate-800 flex items-center justify-between hover:text-purple-900 transition-colors duration-300">
