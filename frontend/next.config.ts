@@ -5,8 +5,8 @@ const nextConfig: NextConfig = {
   images: {
     unoptimized: true,
   },
-  basePath: "/voice-data-collection",
-  assetPrefix: "/voice-data-collection/",
+  // basePath: "/",
+  // assetPrefix: "/",
   trailingSlash: true,
 };
 
