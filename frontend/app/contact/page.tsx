@@ -56,7 +56,7 @@ export default function ContactPage() {
                     </div>
                     <h1 className="text-3xl md:text-4xl font-bold text-slate-800">Contact us</h1>
                 </div>
-                <p className="mt-2 text-slate-600 text-lg animate-fade-in-up animate-delay-200">Questions, collaborations, or feedback? We'd love to hear from you.</p>
+                <p className="mt-2 text-slate-600 text-lg animate-fade-in-up animate-delay-200">Questions, collaborations, or feedback? We&apos;d love to hear from you.</p>
             </div>
 
             {success && (
@@ -225,7 +225,7 @@ export default function ContactPage() {
                                 <svg className="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                                 </svg>
-                                We'll reply within 24–48 hours
+                                We&apos;ll reply within 24–48 hours
                             </p>
                         </div>
                     </form>

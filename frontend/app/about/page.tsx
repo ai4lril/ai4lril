@@ -363,7 +363,7 @@ export default function AboutPage() {
                                 </svg>
                             </div>
                             <h3 className="text-lg font-semibold text-slate-800 mb-2">Join Our Team</h3>
-                            <p className="text-slate-600 text-sm mb-4">Interested in contributing to language preservation? We'd love to hear from you.</p>
+                            <p className="text-slate-600 text-sm mb-4">Interested in contributing to language preservation? We&apos;d love to hear from you.</p>
                             <a
                                 href="/contact"
                                 className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-xl font-medium shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
@@ -436,7 +436,7 @@ export default function AboutPage() {
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                             </svg>
                         </summary>
-                        <p className="mt-4 text-sm text-slate-700 leading-relaxed pl-9">Yes. Use the <a className="text-indigo-600 hover:underline font-medium" href="/contact">contact page</a> to propose new languages or scripts and we'll coordinate onboarding.</p>
+                        <p className="mt-4 text-sm text-slate-700 leading-relaxed pl-9">Yes. Use the <a className="text-indigo-600 hover:underline font-medium" href="/contact">contact page</a> to propose new languages or scripts and we&apos;ll coordinate onboarding.</p>
                     </details>
                     <details className="group rounded-xl border border-slate-200 bg-white/90 hover:bg-white p-4 shadow-sm hover:shadow-md transition-all duration-300">
                         <summary className="cursor-pointer font-semibold text-slate-800 flex items-center justify-between hover:text-purple-900 transition-colors duration-300">

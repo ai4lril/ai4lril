@@ -124,7 +124,7 @@ export default function LanguagesPage() {
                     <div className="bg-white/80 backdrop-blur-xl rounded-3xl p-8 shadow-xl border border-white/20 max-w-2xl mx-auto">
                         <h3 className="text-2xl font-bold text-gray-900 mb-4">Help Preserve Linguistic Diversity</h3>
                         <p className="text-gray-600 mb-6 leading-relaxed">
-                            Your contributions help preserve and document India's rich linguistic heritage.
+                            Your contributions help preserve and document India&apos;s rich linguistic heritage.
                             Every voice, every validation, and every translation brings us closer to
                             creating comprehensive language resources for future generations.
                         </p>
