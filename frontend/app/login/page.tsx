@@ -22,51 +22,41 @@ export default function LoginPage() {
         setLoading(true);
 
         try {
+            // Simulate authentication delay for better UX
+            await new Promise(resolve => setTimeout(resolve, 1000));
+
+            // Basic validation for static site demonstration
+            if (!email || !password) {
+                throw new Error("Please fill in all required fields");
+            }
+
+            if (password.length < 8) {
+                throw new Error("Password must be at least 8 characters long");
+            }
+
             if (isSignIn) {
-                // Sign in functionality - will use Next-Auth after installation
-                const response = await fetch("/api/auth/signin", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({
-                        email,
-                        password,
-                        redirect: false,
-                    }),
-                });
-
-                const data = await response.json();
-
-                if (!response.ok) {
-                    throw new Error(data.error || "Failed to sign in");
+                // Simulate sign in for static site
+                // In a real application, this would validate against a backend
+                if (email === "demo@example.com" && password === "demo123") {
+                    setSuccess("Sign in successful! Redirecting...");
+                    setTimeout(() => {
+                        router.push("/speak");
+                    }, 1500);
+                } else {
+                    throw new Error("Invalid email or password. Try demo@example.com / demo123");
                 }
-
-                // Redirect after successful login
-                router.push("/speak");
             } else {
-                // Sign up functionality - will use Next-
-                const response = await fetch("/api/auth/signup", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({
-                        name,
-                        email,
-                        password,
-                    }),
-                });
-
-                const data = await response.json();
-
-                if (!response.ok) {
-                    throw new Error(data.error || "Failed to sign up");
+                // Sign up functionality - simulate for static site
+                if (!name) {
+                    throw new Error("Please provide your name");
                 }
 
-                // Switch to sign in mode after successful registration
-                setIsSignIn(true);
-                setSuccess("Account created successfully. Please sign in.");
+                // Simulate successful registration
+                setSuccess("Account created successfully! You can now sign in.");
+                setTimeout(() => {
+                    setIsSignIn(true);
+                    setSuccess("");
+                }, 2000);
                 setName("");
                 setEmail("");
                 setPassword("");

@@ -6,6 +6,7 @@ import { usePathname } from 'next/navigation';
 import Modes from "@/components/Modes";
 import TokenModes from "@/components/TokenModes";
 import TranslateModes from "@/components/TranslateModes";
+import AffectModes from "@/components/AffectModes";
 
 import LangSwitcher from './LangSwitcher';
 
@@ -21,6 +22,7 @@ const navbarItems: NavbarItem[] = [
     { name: 'Spontaneous Speech', path: '/question' },
     { name: 'Token Classification', path: '/ner' },
     { name: 'Translation', path: '/translate' },
+    { name: 'Affect', path: '/sentiment' },
 ];
 
 export default function Navbar() {
@@ -145,6 +147,7 @@ export default function Navbar() {
             <Modes />
             <TokenModes />
             <TranslateModes />
+            <AffectModes />
         </nav>
     )
 }

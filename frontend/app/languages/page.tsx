@@ -1,7 +1,66 @@
-"use client";
-
 import { indianLanguages, type IndianLanguage } from './languages';
 import Link from 'next/link';
+import type { Metadata } from "next";
+import Breadcrumb from '@/components/Breadcrumb';
+
+export const metadata: Metadata = {
+    title: "Indian Languages | Complete Guide to 23 Supported Languages",
+    description: "Comprehensive guide to all 23 languages supported by our platform. Explore Assamese, Bengali, Bodo, Dogri, Gujarati, Hindi, Kannada, Kashmiri, Konkani, Maithili, Malayalam, Manipuri, Marathi, Nepali, Odia, Punjabi, Sanskrit, Santhali, Sindhi, Tamil, Telugu, Urdu, and English with detailed linguistic information.",
+    keywords: [
+        "Indian languages",
+        "Assamese language",
+        "Bengali language",
+        "Bodo language",
+        "Dogri language",
+        "Gujarati language",
+        "Hindi language",
+        "Kannada language",
+        "Kashmiri language",
+        "Konkani language",
+        "Maithili language",
+        "Malayalam language",
+        "Manipuri language",
+        "Marathi language",
+        "Nepali language",
+        "Odia language",
+        "Punjabi language",
+        "Sanskrit language",
+        "Santhali language",
+        "Sindhi language",
+        "Tamil language",
+        "Telugu language",
+        "Urdu language",
+        "English language",
+        "Devanagari script",
+        "linguistic diversity India",
+        "Indian linguistics",
+        "Indo-Aryan languages",
+        "Dravidian languages",
+        "Sino-Tibetan languages",
+        "Austroasiatic languages",
+        "scheduled languages India",
+        "classical languages India"
+    ],
+    openGraph: {
+        title: "Complete Guide to 23 Languages | Language Data Collection",
+        description: "Explore our comprehensive support for 23 languages including Assamese, Bengali, Gujarati, Hindi, Kannada, Malayalam, Marathi, Punjabi, Tamil, Telugu, Urdu, English, and many more. Discover linguistic diversity and cultural heritage.",
+        type: "website",
+        images: [
+            {
+                url: "/og-languages.jpg",
+                width: 1200,
+                height: 630,
+                alt: "Complete Guide to 23 Languages Supported by Language Data Collection",
+            },
+        ],
+    },
+    twitter: {
+        card: "summary_large_image",
+        title: "23 Languages | Complete Linguistic Guide",
+        description: "Comprehensive coverage of linguistic diversity - from Assamese to Urdu and English, explore the rich tapestry of languages and scripts.",
+        images: ["/og-languages.jpg"],
+    },
+};
 
 export default function LanguagesPage() {
     return (
@@ -14,6 +73,7 @@ export default function LanguagesPage() {
             </div>
 
             <div className="relative container mx-auto py-12 px-4">
+                <Breadcrumb items={[{ label: 'Languages', href: '/languages' }]} />
                 {/* Header Section */}
                 <div className="text-center mb-12 animate-fade-in-up">
                     <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl shadow-lg mb-6 animate-bounce-in">
@@ -26,8 +86,9 @@ export default function LanguagesPage() {
                         Indian Languages
                     </h1>
                     <p className="text-gray-600 text-lg max-w-2xl mx-auto animate-fade-in-up delay-200">
-                        Explore the rich linguistic diversity of India. Each language carries centuries of cultural heritage,
-                        literature, and traditions that continue to evolve in our modern world.
+                        Explore the rich linguistic diversity of India and beyond with our comprehensive guide to 23 supported languages.
+                        From ancient Sanskrit to modern regional languages and English, discover the Indo-Aryan, Dravidian, Sino-Tibetan,
+                        and Austroasiatic language families that make our linguistic landscape a treasure trove.
                     </p>
                 </div>
 
@@ -36,16 +97,19 @@ export default function LanguagesPage() {
                     <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 text-center shadow-lg border border-white/20">
                         <div className="text-3xl font-bold text-blue-600 mb-2">{indianLanguages.length}</div>
                         <div className="text-gray-600 font-medium">Languages Supported</div>
+                        <div className="text-xs text-gray-500 mt-1">Indo-Aryan, Dravidian, Sino-Tibetan, Austroasiatic</div>
                     </div>
                     <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 text-center shadow-lg border border-white/20">
                         <div className="text-3xl font-bold text-purple-600 mb-2">
                             {indianLanguages.reduce((sum, lang) => sum + lang.scripts.length, 0)}
                         </div>
-                        <div className="text-gray-600 font-medium">Script Variants</div>
+                        <div className="text-gray-600 font-medium">Writing Systems</div>
+                        <div className="text-xs text-gray-500 mt-1">Devanagari, regional scripts, Roman</div>
                     </div>
                     <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 text-center shadow-lg border border-white/20">
-                        <div className="text-3xl font-bold text-indigo-600 mb-2">500M+</div>
-                        <div className="text-gray-600 font-medium">Native Speakers</div>
+                        <div className="text-3xl font-bold text-indigo-600 mb-2">1.5B+</div>
+                        <div className="text-gray-600 font-medium">Total Speakers</div>
+                        <div className="text-xs text-gray-500 mt-1">Across all supported languages</div>
                     </div>
                 </div>
 

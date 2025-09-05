@@ -1,20 +1,90 @@
 import Link from "next/link";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "Home",
+    description: "Welcome to Language Data Collection - an open-source platform supporting 23 languages including Assamese, Bengali, Gujarati, Hindi, Kannada, Malayalam, Marathi, Punjabi, Tamil, Telugu, Urdu, English, and more. Contribute to advance AI and NLP research.",
+    keywords: [
+        "language data collection",
+        "Indian languages",
+        "Assamese language",
+        "Bengali language",
+        "Gujarati language",
+        "Hindi language",
+        "Kannada language",
+        "Malayalam language",
+        "Marathi language",
+        "Punjabi language",
+        "Tamil language",
+        "Telugu language",
+        "Urdu language",
+        "open source platform",
+        "AI training data",
+        "NLP research",
+        "speech data",
+        "text annotation",
+        "multilingual datasets",
+        "linguistic diversity",
+        "Indian linguistics"
+    ],
+    openGraph: {
+        title: "Language Data Collection | 23 Languages Supported",
+        description: "Open-source platform supporting 23 languages including Assamese, Bengali, Gujarati, Hindi, Kannada, Malayalam, Marathi, Punjabi, Tamil, Telugu, Urdu, English. Contribute speech, text, and annotations to advance AI and NLP research.",
+        type: "website",
+        images: [
+            {
+                url: "/og-home.jpg",
+                width: 1200,
+                height: 630,
+                alt: "Language Data Collection Platform - 23 Languages Supported",
+            },
+        ],
+    },
+    twitter: {
+        card: "summary_large_image",
+        title: "Language Data Collection | 23 Languages",
+        description: "Open-source platform for collecting language data across 23 languages including English. Advance AI and NLP research through community contributions.",
+        images: ["/og-home.jpg"],
+    },
+};
 
 export default function Home() {
     return (
         <div className="w-full">
-            <section className="relative container mx-auto py-12 sm:py-16 md:py-24 grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
+            {/* Structured Data for Homepage */}
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{
+                    __html: JSON.stringify({
+                        "@context": "https://schema.org",
+                        "@type": "Organization",
+                        "name": "Language Data Collection",
+                        "url": "https://ai4lril.github.io",
+                        "logo": "https://ai4lril.github.io/logo.png",
+                        "description": "Open-source platform supporting Low-Resourced Indian languages for collecting, validating, and curating high-quality language data for AI and NLP research",
+                        "founder": {
+                            "@type": "Person",
+                            "name": "Alvyn Abranches"
+                        },
+                        "sameAs": [
+                            "https://github.com/ai4lril/ai4lril.github.io"
+                        ]
+                    })
+                }}
+            />
+            <section className="relative container mx-auto py-12 sm:py-16 md:py-24 grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center" aria-labelledby="hero-heading">
                 {/* Decorative background */}
                 <div className="pointer-events-none absolute -z-10 inset-0">
                     <div className="absolute -top-10 -left-10 w-56 h-56 rounded-full bg-blue-100/50 blur-2xl" />
                     <div className="absolute -bottom-16 -right-16 w-72 h-72 rounded-full bg-indigo-100/50 blur-3xl" />
                 </div>
-                <div>
-                    <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight leading-tight" style={{ color: 'var(--brand-900)' }}>
-                        Donate your contributions for Indian languages
+                <header>
+                    <h1 id="hero-heading" className="text-4xl sm:text-5xl font-extrabold tracking-tight leading-tight" style={{ color: 'var(--brand-900)' }}>
+                        Contribute to Indian Languages
                     </h1>
                     <p className="mt-4 text-slate-600 text-lg leading-relaxed">
-                        Help build open, research-grade datasets for diverse Indian languages and scripts. Contribute speech, validate recordings, and support revitalization.
+                        Help build open, research-grade datasets for linguistic diversity. From Assamese to Urdu and English, contribute speech, validate recordings,
+                        and support AI development across Indo-Aryan, Dravidian, Sino-Tibetan, and Austroasiatic language families.
                     </p>
                     <div className="mt-8 flex flex-wrap gap-3">
                         <Link href="/speak" className="group bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 focus:outline-none focus:ring-2 focus:ring-blue-300 text-white px-6 py-3 rounded-full font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 active:scale-95">
@@ -42,7 +112,7 @@ export default function Home() {
                             </span>
                         </Link>
                     </div>
-                </div>
+                </header>
                 <div className="relative">
                     <div className="glass rounded-2xl p-6 shadow-lg border border-gray-100">
                         <div className="grid grid-cols-2 gap-4">
@@ -97,12 +167,12 @@ export default function Home() {
                         <div className="mt-2 h-1 bg-gradient-to-r from-emerald-400 to-teal-500 rounded-full opacity-60 group-hover:opacity-100 transition-opacity"></div>
                     </div>
                     <div className="group rounded-xl bg-white/90 hover:bg-white border border-slate-200 p-4 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 hover:-translate-y-1">
-                        <div className="text-3xl font-extrabold text-amber-700 mb-1 group-hover:scale-110 transition-transform duration-300">1.2k+</div>
+                        <div className="text-3xl font-extrabold text-amber-700 mb-1 group-hover:scale-110 transition-transform duration-300">100+</div>
                         <div className="text-sm text-slate-600 font-medium">Speakers</div>
                         <div className="mt-2 h-1 bg-gradient-to-r from-amber-400 to-orange-500 rounded-full opacity-60 group-hover:opacity-100 transition-opacity"></div>
                     </div>
                     <div className="group rounded-xl bg-white/90 hover:bg-white border border-slate-200 p-4 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 hover:-translate-y-1">
-                        <div className="text-3xl font-extrabold text-fuchsia-700 mb-1 group-hover:scale-110 transition-transform duration-300">230h</div>
+                        <div className="text-3xl font-extrabold text-fuchsia-700 mb-1 group-hover:scale-110 transition-transform duration-300">1h</div>
                         <div className="text-sm text-slate-600 font-medium">Recorded</div>
                         <div className="mt-2 h-1 bg-gradient-to-r from-fuchsia-400 to-pink-500 rounded-full opacity-60 group-hover:opacity-100 transition-opacity"></div>
                     </div>
@@ -114,7 +184,7 @@ export default function Home() {
                 <div className="mt-6 card rounded-2xl p-6">
                     <div className="flex items-start gap-4">
                         <div className="size-12 rounded-full bg-gradient-to-tr from-blue-200 to-indigo-200 border border-white" />
-        <div>
+                        <div>
                             <div className="flex flex-wrap items-center gap-2">
                                 <h3 className="text-lg font-semibold text-slate-800">Alvyn Abranches</h3>
                                 <span className="text-xs px-2 py-1 rounded-full bg-blue-50 text-blue-700 border border-blue-200">Assistant Professor</span>
@@ -132,14 +202,14 @@ export default function Home() {
                 </div>
             </section>
 
-            <section className="container mx-auto py-12 md:py-16">
+            <section className="container mx-auto py-12 md:py-16" id="highlights">
                 <h2 className="text-2xl sm:text-3xl font-bold text-slate-800">
                     <span className="inline-block relative pb-1">Highlights
                         <span className="absolute -bottom-0.5 left-0 w-full h-[2px] bg-gradient-to-r from-indigo-500 to-purple-500"></span>
                     </span>
                 </h2>
                 <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <a href="/about#mission" className="group rounded-2xl p-6 glass border border-slate-200 transition-all duration-500 hover:shadow-2xl hover:-translate-y-2 hover:scale-[1.02] will-change-transform relative overflow-hidden animate-fade-in-up">
+                    <Link href="/about#mission" className="group rounded-2xl p-6 glass border border-slate-200 transition-all duration-500 hover:shadow-2xl hover:-translate-y-2 hover:scale-[1.02] will-change-transform relative overflow-hidden animate-fade-in-up">
                         <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                         <h3 className="text-lg font-semibold text-slate-800 flex items-center gap-3 relative z-10">
                             <div className="p-2 rounded-full bg-indigo-100 group-hover:bg-indigo-200 transition-colors duration-300 animate-bounce-in">
@@ -156,8 +226,8 @@ export default function Home() {
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                             </svg>
                         </div>
-                    </a>
-                    <a href="/about#story" className="group rounded-2xl p-6 glass border border-slate-200 transition-all duration-500 hover:shadow-2xl hover:-translate-y-2 hover:scale-[1.02] will-change-transform relative overflow-hidden animate-fade-in-up animate-delay-200">
+                    </Link>
+                    <Link href="/about#story" className="group rounded-2xl p-6 glass border border-slate-200 transition-all duration-500 hover:shadow-2xl hover:-translate-y-2 hover:scale-[1.02] will-change-transform relative overflow-hidden animate-fade-in-up animate-delay-200">
                         <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 to-teal-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                         <h3 className="text-lg font-semibold text-slate-800 flex items-center gap-3 relative z-10">
                             <div className="p-2 rounded-full bg-emerald-100 group-hover:bg-emerald-200 transition-colors duration-300 animate-bounce-in animate-delay-200">
@@ -174,8 +244,8 @@ export default function Home() {
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                             </svg>
                         </div>
-                    </a>
-                    <a href="/about#focus" className="group rounded-2xl p-6 glass border border-slate-200 transition-all duration-500 hover:shadow-2xl hover:-translate-y-2 hover:scale-[1.02] will-change-transform relative overflow-hidden animate-fade-in-up animate-delay-400">
+                    </Link>
+                    <Link href="/about#focus" className="group rounded-2xl p-6 glass border border-slate-200 transition-all duration-500 hover:shadow-2xl hover:-translate-y-2 hover:scale-[1.02] will-change-transform relative overflow-hidden animate-fade-in-up animate-delay-400">
                         <div className="absolute inset-0 bg-gradient-to-br from-amber-500/5 to-orange-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                         <h3 className="text-lg font-semibold text-slate-800 flex items-center gap-3 relative z-10">
                             <div className="p-2 rounded-full bg-amber-100 group-hover:bg-amber-200 transition-colors duration-300 animate-bounce-in animate-delay-400">
@@ -192,33 +262,98 @@ export default function Home() {
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                             </svg>
                         </div>
-                    </a>
+                    </Link>
                 </div>
                 <div className="mt-6 grid grid-cols-1 md:grid-cols-4 gap-4 text-sm text-slate-700">
-                    <a href="/about#focus" className="group rounded-xl border border-slate-200 p-4 transition-all duration-300 hover:shadow-lg hover:-translate-y-1 hover:border-indigo-300 hover:bg-indigo-50/50 flex items-center justify-between">
+                    <Link href="/about#focus" className="group rounded-xl border border-slate-200 p-4 transition-all duration-300 hover:shadow-lg hover:-translate-y-1 hover:border-indigo-300 hover:bg-indigo-50/50 flex items-center justify-between">
                         <span>Community-involved workflows</span>
                         <svg className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                         </svg>
-                    </a>
-                    <a href="/about#story" className="group rounded-xl border border-slate-200 p-4 transition-all duration-300 hover:shadow-lg hover:-translate-y-1 hover:border-emerald-300 hover:bg-emerald-50/50 flex items-center justify-between">
+                    </Link>
+                    <Link href="/about#story" className="group rounded-xl border border-slate-200 p-4 transition-all duration-300 hover:shadow-lg hover:-translate-y-1 hover:border-emerald-300 hover:bg-emerald-50/50 flex items-center justify-between">
                         <span>Open, research-grade datasets</span>
                         <svg className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                         </svg>
-                    </a>
-                    <a href="/about#focus" className="group rounded-xl border border-slate-200 p-4 transition-all duration-300 hover:shadow-lg hover:-translate-y-1 hover:border-amber-300 hover:bg-amber-50/50 flex items-center justify-between">
+                    </Link>
+                    <Link href="/about#focus" className="group rounded-xl border border-slate-200 p-4 transition-all duration-300 hover:shadow-lg hover:-translate-y-1 hover:border-amber-300 hover:bg-amber-50/50 flex items-center justify-between">
                         <span>Accessible UI for contributors</span>
                         <svg className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                         </svg>
-                    </a>
-                    <a href="/about#focus" className="group rounded-xl border border-slate-200 p-4 transition-all duration-300 hover:shadow-lg hover:-translate-y-1 hover:border-purple-300 hover:bg-purple-50/50 flex items-center justify-between">
+                    </Link>
+                    <Link href="/about#focus" className="group rounded-xl border border-slate-200 p-4 transition-all duration-300 hover:shadow-lg hover:-translate-y-1 hover:border-purple-300 hover:bg-purple-50/50 flex items-center justify-between">
                         <span>Script-aware transcription and review</span>
                         <svg className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                         </svg>
-                    </a>
+                    </Link>
+                </div>
+            </section>
+
+            {/* Why Choose Us Section */}
+            <section className="container mx-auto py-12 md:py-16" id="why-choose-us">
+                <div className="text-center mb-12">
+                    <h2 className="text-2xl sm:text-3xl font-bold text-slate-800 mb-4">
+                        Why Choose Our Language Data Collection Platform?
+                    </h2>
+                    <p className="text-slate-600 max-w-2xl mx-auto">
+                        Discover why researchers, linguists, and AI developers worldwide trust our platform for high-quality multilingual datasets.
+                    </p>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div className="text-center p-6 rounded-xl bg-white/60 backdrop-blur-sm border border-slate-200 hover:shadow-lg transition-shadow">
+                        <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                        </div>
+                        <h3 className="font-semibold text-slate-800 mb-2">23 Languages Supported</h3>
+                        <p className="text-sm text-slate-600">Comprehensive coverage of Indian linguistic diversity with native script support</p>
+                    </div>
+
+                    <div className="text-center p-6 rounded-xl bg-white/60 backdrop-blur-sm border border-slate-200 hover:shadow-lg transition-shadow">
+                        <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <svg className="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                            </svg>
+                        </div>
+                        <h3 className="font-semibold text-slate-800 mb-2">Community-Driven</h3>
+                        <p className="text-sm text-slate-600">Open-source platform with community contributions and peer review validation</p>
+                    </div>
+
+                    <div className="text-center p-6 rounded-xl bg-white/60 backdrop-blur-sm border border-slate-200 hover:shadow-lg transition-shadow">
+                        <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <svg className="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                            </svg>
+                        </div>
+                        <h3 className="font-semibold text-slate-800 mb-2">Research-Grade Quality</h3>
+                        <p className="text-sm text-slate-600">High-quality datasets validated by linguistic experts and AI researchers</p>
+                    </div>
+
+                    <div className="text-center p-6 rounded-xl bg-white/60 backdrop-blur-sm border border-slate-200 hover:shadow-lg transition-shadow">
+                        <div className="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <svg className="w-6 h-6 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4" />
+                            </svg>
+                        </div>
+                        <h3 className="font-semibold text-slate-800 mb-2">Free & Open Source</h3>
+                        <p className="text-sm text-slate-600">No cost access to datasets and tools for advancing AI and NLP research</p>
+                    </div>
+                </div>
+
+                <div className="text-center mt-12">
+                    <div className="inline-flex flex-wrap gap-4 justify-center">
+                        <Link href="/languages" className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-full font-semibold transition-colors">
+                            Explore Languages
+                        </Link>
+                        <Link href="/about" className="bg-white hover:bg-gray-50 text-slate-800 px-6 py-3 rounded-full font-semibold border border-slate-200 transition-colors">
+                            Learn More
+                        </Link>
+                    </div>
                 </div>
             </section>
         </div>

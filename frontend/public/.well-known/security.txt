@@ -1,0 +1,21 @@
+# Security Policy for Language Data Collection Platform
+
+# Contact Information
+Contact: mailto:contact@language-data-collection.org
+Contact: https://ai4lril.github.io/contact
+
+# Encryption
+Encryption: https://ai4lril.github.io/contact
+
+# Preferred Languages
+Preferred-Languages: en
+
+# Policy
+Policy: https://ai4lril.github.io/privacy
+
+# Acknowledgment
+# We appreciate security researchers who help keep our platform safe.
+# Please allow reasonable time for us to respond to your reports.
+
+# Last Updated
+Canonical: https://ai4lril.github.io/.well-known/security.txt

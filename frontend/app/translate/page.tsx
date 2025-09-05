@@ -9,7 +9,7 @@ export default function TranslatePage() {
     const [lang, setLang] = useState<string | null>(null);
     const [pool, setPool] = useState(sourceTexts);
     const [index, setIndex] = useState(0);
-    const [target, setTarget] = useState<string>("hin_deva"); // Will be updated from storage or keep default
+    const [target, setTarget] = useState<string>("eng_latn"); // Will be updated from storage or keep default
     const [translation, setTranslation] = useState<string>("");
     const [error, setError] = useState<string>("");
 
@@ -56,7 +56,7 @@ export default function TranslatePage() {
             setTarget(savedTarget);
         } else {
             // Set default if no saved preference exists
-            const defaultTarget = "hin_deva";
+            const defaultTarget = "eng_latn";
             setTarget(defaultTarget);
             setPreferredTargetLanguage(defaultTarget);
         }
@@ -65,10 +65,10 @@ export default function TranslatePage() {
     // Reset to default if target equals source (avoid same language translation)
     useEffect(() => {
         if (current?.langCode && target === current.langCode) {
-            setTarget("hin_deva");
+            setTarget("eng_latn");
             try {
-                setPreferredTargetLanguage("hin_deva");
-                window.dispatchEvent(new CustomEvent('translate-target-changed', { detail: 'hin_deva' }));
+                setPreferredTargetLanguage("eng_latn");
+                window.dispatchEvent(new CustomEvent('translate-target-changed', { detail: 'eng_latn' }));
             } catch { }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -85,19 +85,31 @@ export default function TranslatePage() {
         e.preventDefault();
         if (!target) { setError("Select a target language."); return; }
         if (!translation.trim()) { setError("Enter a translation."); return; }
-        console.log("Translate submit", {
-            sourceId: current?.id,
-            sourceLang: current?.langCode,
-            sourceText: current?.text,
-            targetLang: target,
-            translation,
-        });
-        alert("Submitted translation (check console)");
+        // Only log in development environment
+        if (process.env.NODE_ENV === 'development') {
+            console.log("Translate submit", {
+                sourceId: current?.id,
+                sourceLang: current?.langCode,
+                sourceText: current?.text,
+                targetLang: target,
+                translation,
+            });
+        }
+        // Show success message instead of alert
+        setError(""); // Clear any previous errors
+        alert("Translation submitted successfully!");
         nextItem();
     };
 
     // Get all available languages except the current source language
-    const targetOptions = LANGUAGES.filter(language => language.code !== current?.langCode);
+    const targetOptions = LANGUAGES.filter(language => {
+        // Only exclude if we have a valid current item with a language code
+        if (current?.langCode) {
+            return language.code !== current.langCode;
+        }
+        // If no current item, show all languages
+        return true;
+    });
 
     return (
         <div className="w-full max-w-2xl md:max-w-4xl py-4 px-2 md:px-4 mx-auto animate-fade-in-up">
@@ -147,8 +159,8 @@ export default function TranslatePage() {
                                         setPreferredTargetLanguage(val);
                                     }}
                                     className={`w-full px-4 py-3 border-2 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400 transition-all duration-200 ${!target || target === current?.langCode
-                                            ? 'border-red-300 bg-red-50'
-                                            : 'border-gray-200 hover:border-gray-300'
+                                        ? 'border-red-300 bg-red-50'
+                                        : 'border-gray-200 hover:border-gray-300'
                                         }`}
                                 >
                                     <option value="">Select target language...</option>
@@ -156,7 +168,6 @@ export default function TranslatePage() {
                                         <option
                                             key={language.code}
                                             value={language.code}
-                                            disabled={language.code === current?.langCode}
                                         >
                                             {language.name}
                                         </option>

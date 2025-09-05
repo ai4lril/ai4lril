@@ -1,11 +1,54 @@
 import { contributors } from './contributors';
 import Image from 'next/image';
 import Link from 'next/link';
+import type { Metadata } from "next";
+import Breadcrumb from '@/components/Breadcrumb';
+
+export const metadata: Metadata = {
+    title: "About | Supporting 23 Languages",
+    description: "Learn about the Language Data Collection project supporting 23 languages from Assamese to Urdu and English. Our mission to preserve linguistic diversity through open-source technology and AI development.",
+    keywords: [
+        "about language data collection",
+        "23 languages",
+        "linguistic research",
+        "Indian languages preservation",
+        "Assamese Bengali Gujarati Hindi",
+        "Kannada Malayalam Marathi Punjabi",
+        "Tamil Telugu Urdu English",
+        "open source project",
+        "team Alvyn Abranches",
+        "language technology",
+        "computational linguistics",
+        "language documentation",
+        "Indo-Aryan languages",
+        "Dravidian languages"
+    ],
+    openGraph: {
+        title: "About Language Data Collection | 23 Languages Supported",
+        description: "Discover our mission to preserve linguistic diversity through open-source technology. Supporting 23 languages from Assamese to Urdu and English for AI and NLP research.",
+        type: "website",
+        images: [
+            {
+                url: "/og-about.jpg",
+                width: 1200,
+                height: 630,
+                alt: "About Language Data Collection - Supporting 23 Languages",
+            },
+        ],
+    },
+    twitter: {
+        card: "summary_large_image",
+        title: "About Language Data Collection | 23 Languages",
+        description: "Learn about our mission to preserve 23 languages through open-source technology and AI development.",
+        images: ["/og-about.jpg"],
+    },
+};
 
 export default function AboutPage() {
 
     return (
         <div className="w-full max-w-2xl md:max-w-4xl xl:max-w-6xl mx-auto py-12 md:py-16 px-4 animate-fade-in-up">
+            <Breadcrumb items={[{ label: 'About', href: '/about' }]} />
             {/* Hero / Mission */}
             <header className="relative glass rounded-2xl p-6 md:p-8 border border-slate-100 animate-bounce-in xl:mr-[280px]" id="mission">
                 <div className="absolute inset-0 -z-10 bg-gradient-to-b from-blue-50/40 to-indigo-50/20 rounded-2xl blur-xl"></div>
@@ -268,8 +311,8 @@ export default function AboutPage() {
                                 {/* Background Pattern */}
                                 <div className="absolute inset-0 opacity-30 group-hover:opacity-40 transition-opacity duration-500">
                                     <div className={`absolute top-0 right-0 w-32 h-32 rounded-full blur-3xl ${index % 4 === 0 ? 'bg-indigo-200' :
-                                            index % 4 === 1 ? 'bg-purple-200' :
-                                                index % 4 === 2 ? 'bg-blue-200' : 'bg-emerald-200'
+                                        index % 4 === 1 ? 'bg-purple-200' :
+                                            index % 4 === 2 ? 'bg-blue-200' : 'bg-emerald-200'
                                         }`}></div>
                                 </div>
 
@@ -281,9 +324,11 @@ export default function AboutPage() {
                                         <div className="relative">
                                             {c.photoUrl ? (
                                                 <div className="relative">
-                                                    <img
+                                                    <Image
                                                         alt={c.name}
                                                         src={c.photoUrl}
+                                                        width={80}
+                                                        height={80}
                                                         className="w-20 h-20 rounded-2xl object-cover shadow-lg ring-4 ring-white group-hover:ring-indigo-100 transition-all duration-300"
                                                     />
                                                     <div className="absolute -bottom-2 -right-2 w-6 h-6 bg-green-400 rounded-full border-2 border-white shadow-md"></div>
@@ -329,14 +374,14 @@ export default function AboutPage() {
                                                 <span
                                                     key={interest}
                                                     className={`inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium transition-all duration-300 group-hover:scale-105 ${i % 3 === 0
-                                                            ? 'bg-gradient-to-r from-indigo-100 to-indigo-200 text-indigo-700 border border-indigo-300'
-                                                            : i % 3 === 1
-                                                                ? 'bg-gradient-to-r from-purple-100 to-purple-200 text-purple-700 border border-purple-300'
-                                                                : 'bg-gradient-to-r from-emerald-100 to-emerald-200 text-emerald-700 border border-emerald-300'
+                                                        ? 'bg-gradient-to-r from-indigo-100 to-indigo-200 text-indigo-700 border border-indigo-300'
+                                                        : i % 3 === 1
+                                                            ? 'bg-gradient-to-r from-purple-100 to-purple-200 text-purple-700 border border-purple-300'
+                                                            : 'bg-gradient-to-r from-emerald-100 to-emerald-200 text-emerald-700 border border-emerald-300'
                                                         }`}
                                                 >
                                                     <div className={`w-1.5 h-1.5 rounded-full ${i % 3 === 0 ? 'bg-indigo-500' :
-                                                            i % 3 === 1 ? 'bg-purple-500' : 'bg-emerald-500'
+                                                        i % 3 === 1 ? 'bg-purple-500' : 'bg-emerald-500'
                                                         }`}></div>
                                                     {interest}
                                                 </span>

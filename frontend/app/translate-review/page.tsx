@@ -18,7 +18,7 @@ export default function TranslateReviewPage() {
             setTarget(savedTarget);
         } else {
             // Set default if no saved preference exists
-            const defaultTarget = "hin_deva";
+            const defaultTarget = "eng_latn";
             setTarget(defaultTarget);
             setPreferredTargetLanguage(defaultTarget);
         }
@@ -62,11 +62,21 @@ export default function TranslateReviewPage() {
     const nextItem = () => setIndex((prev) => (prev + 1) % finalFilteredItems.length);
 
     // Get all available languages except the current source language
-    const targetOptions = LANGUAGES.filter(language => language.code !== current?.sourceLang);
+    const targetOptions = LANGUAGES.filter(language => {
+        // Only exclude if we have a valid current item with a source language
+        if (current?.sourceLang) {
+            return language.code !== current.sourceLang;
+        }
+        // If no current item, show all languages
+        return true;
+    });
 
 
     const vote = (isCorrect: boolean) => {
-        console.log("Translate review", { id: current.id, correct: isCorrect });
+        // Only log in development environment
+        if (process.env.NODE_ENV === 'development') {
+            console.log("Translate review", { id: current.id, correct: isCorrect });
+        }
         nextItem();
     };
 
@@ -78,7 +88,7 @@ export default function TranslateReviewPage() {
                     <span suppressHydrationWarning className="inline-block text-xs px-3 py-2 rounded-full bg-indigo-50 text-indigo-700 border border-indigo-200 font-medium animate-bounce-in">{codeToLabel(lang)}</span>
                 </div>
 
-                                    {/* Target Language Selection */}
+                {/* Target Language Selection */}
                 <div className="space-y-2 max-w-xs mx-auto">
                     {target && filteredReviewItems.length === 0 && (
                         <div className="text-xs text-amber-600 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2 text-center">
@@ -102,8 +112,8 @@ export default function TranslateReviewPage() {
                             setPreferredTargetLanguage(val);
                         }}
                         className={`w-full px-4 py-3 border-2 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400 transition-all duration-200 ${!target || target === current?.sourceLang
-                                ? 'border-red-300 bg-red-50'
-                                : 'border-gray-200 hover:border-gray-300'
+                            ? 'border-red-300 bg-red-50'
+                            : 'border-gray-200 hover:border-gray-300'
                             }`}
                     >
                         <option value="">Select target language...</option>
@@ -111,7 +121,6 @@ export default function TranslateReviewPage() {
                             <option
                                 key={language.code}
                                 value={language.code}
-                                disabled={language.code === current?.sourceLang}
                             >
                                 {language.name}
                             </option>
